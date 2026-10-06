@@ -14,7 +14,7 @@ const { eyebrow, title, description, current, tone = 'green' } = Astro.props;
 
 <section class:list={['page-hero', `page-hero--${tone}`]}>
   <div class="page-hero-motif" aria-hidden="true"><span></span></div>
-  <div class="container page-hero-inner">
+  <div class="container page-hero-inner" data-content-width="standard">
     <Breadcrumb current={current} />
     <span class="eyebrow">{eyebrow}</span>
     <h1 class="page-hero-title">{title}</h1>
@@ -27,8 +27,8 @@ const { eyebrow, title, description, current, tone = 'green' } = Astro.props;
   .page-hero--green { background: linear-gradient(130deg, #173e30, #295d47); }
   .page-hero--maroon { background: linear-gradient(130deg, #4b1e1a, #7b2d26); }
   .page-hero--saffron { background: linear-gradient(130deg, #9c420f, #e8751a); }
-  .page-hero-inner { position: relative; z-index: 2; display: grid; width: min(1580px, calc(100% - 2rem)); gap: 1.25rem; }
-  .page-hero-title { max-width: none; font-size: clamp(2.5rem, 3vw, 3.25rem); }
+  .page-hero-inner { position: relative; z-index: 2; display: grid; width: var(--container); gap: 1.25rem; }
+  .page-hero-title { max-width: none; font-size: clamp(2.35rem, 2.5vw, 2.5rem); }
   .page-hero-subtitle { max-width: none; color: rgba(255,255,255,.8); font-size: clamp(.96rem, 1.2vw, 1.1rem); }
   :global(.page-hero .eyebrow) { color: #ffd8b7; }
   .page-hero-motif { position: absolute; right: -8rem; top: -10rem; width: min(55vw, 650px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(255,255,255,.025), 0 0 0 8rem rgba(255,255,255,.018); }

@@ -119,6 +119,7 @@ describe('organisation and program page family', () => {
 
     expect(about).toContain('class="page-hero-title"');
     expect(about).toContain('class="page-hero-subtitle"');
+    expect(about).toContain('data-content-width="standard"');
     expect(home).toContain('class="section-title"');
     expect(home).toContain('class="section-subtitle"');
   });
