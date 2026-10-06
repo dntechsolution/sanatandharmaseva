@@ -8,8 +8,16 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="site-header" data-site-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="Sanatan Dharam Sewa Kendra — Home">
-      <span class="brand-mark" aria-hidden="true">
-        <span></span>
+      <span class="brand-logo-frame" aria-hidden="true">
+        <img
+          class="brand-logo"
+          src="/images/sanatan-dharma-sewa-kendra-logo.webp"
+          alt="Sanatan Dharam Sewa Kendra logo"
+          width="320"
+          height="320"
+          decoding="async"
+          fetchpriority="high"
+        />
       </span>
       <span class="brand-copy">
         <strong>Sanatan Dharam</strong>
@@ -111,31 +119,22 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     gap: 0.7rem;
   }
 
-  .brand-mark {
-    display: grid;
-    width: 38px;
+  .brand-logo-frame {
+    display: block;
+    width: 52px;
     aspect-ratio: 1;
-    place-items: center;
-    border: 1px solid color-mix(in srgb, var(--saffron) 55%, transparent);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--saffron) 48%, transparent);
     border-radius: 50%;
+    background: #f6c255;
+    box-shadow: 0 5px 14px rgba(76, 31, 28, 0.14);
   }
 
-  .brand-mark::before,
-  .brand-mark::after,
-  .brand-mark span {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 1px solid var(--saffron);
-    border-radius: 50%;
-    content: '';
-  }
-
-  .brand-mark::after {
-    width: 8px;
-    height: 8px;
-    border: 0;
-    background: var(--forest);
+  .brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
   }
 
   .brand-copy {
@@ -322,6 +321,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     .brand-copy strong {
       font-size: 0.86rem;
+    }
+
+    .brand-logo-frame {
+      width: 46px;
     }
   }
 </style>

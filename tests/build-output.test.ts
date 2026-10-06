@@ -34,6 +34,15 @@ describe('built site shell', () => {
     expect(existsSync(dist('favicon.svg'))).toBe(true);
     expect(existsSync(dist('robots.txt'))).toBe(true);
   });
+
+  it('renders the supplied organisation logo at the start of the navigation brand', () => {
+    const html = readBuilt();
+    const brand = html.match(/<a class="brand"[\s\S]*?<\/a>/)?.[0] ?? '';
+
+    expect(brand).toContain('src="/images/sanatan-dharma-sewa-kendra-logo.webp"');
+    expect(brand.indexOf('<img')).toBeLessThan(brand.indexOf('<span class="brand-copy"'));
+    expect(existsSync(dist('images', 'sanatan-dharma-sewa-kendra-logo.webp'))).toBe(true);
+  });
 });
 
 describe('home narrative', () => {
