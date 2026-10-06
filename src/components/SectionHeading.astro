@@ -12,15 +12,19 @@ const { eyebrow, title, description, align = 'left', light = false } = Astro.pro
 
 <header class:list={['section-heading', `section-heading--${align}`, { 'section-heading--light': light }]}>
   {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-  <h2>{title}</h2>
-  {description && <p>{description}</p>}
+  <h2 class="section-title">{title}</h2>
+  {description && <p class="section-subtitle">{description}</p>}
 </header>
 
 <style>
-  .section-heading { display: grid; max-width: 760px; gap: 1rem; }
+  .section-heading { display: grid; width: 100%; max-width: none; gap: 1rem; }
   .section-heading--center { margin-inline: auto; justify-items: center; text-align: center; }
-  h2 { color: var(--maroon); }
-  p { max-width: 66ch; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); }
+  .section-title { max-width: none; color: var(--maroon); font-size: clamp(2rem, 3vw, 2.75rem); }
+  .section-subtitle { max-width: none; color: var(--muted); font-size: clamp(.94rem, 1.15vw, 1.06rem); }
   .section-heading--light h2, .section-heading--light p { color: inherit; }
   .section-heading--light p { opacity: .74; }
+  @media (min-width: 1280px) {
+    .section-title,
+    .section-subtitle { white-space: nowrap; }
+  }
 </style>

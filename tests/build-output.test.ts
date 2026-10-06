@@ -113,6 +113,16 @@ describe('organisation and program page family', () => {
     expect(new Set(records.map(({ description }) => description)).size).toBe(routes.length);
   });
 
+  it('marks shared headings and subheadings for single-line desktop presentation', () => {
+    const about = readBuilt('about/index.html');
+    const home = readBuilt();
+
+    expect(about).toContain('class="page-hero-title"');
+    expect(about).toContain('class="page-hero-subtitle"');
+    expect(home).toContain('class="section-title"');
+    expect(home).toContain('class="section-subtitle"');
+  });
+
   it('keeps the about story to verified values and milestones', () => {
     const html = readBuilt('about/index.html');
     for (const value of ['Seva', 'Integrity', 'Education', 'Empowerment', 'Harmony', 'Inclusiveness']) {
