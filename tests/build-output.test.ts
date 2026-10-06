@@ -81,3 +81,58 @@ describe('home narrative', () => {
     expect(html).toContain('href="/get-involved#partner"');
   });
 });
+
+describe('organisation and program page family', () => {
+  const routes = ['about', 'programs', 'education-skills', 'community-development'];
+
+  it('builds every route with one h1 and unique page metadata', () => {
+    const records = routes.map((route) => {
+      const html = readBuilt(`${route}/index.html`);
+      expect(html.match(/<h1(?:\s[^>]*)?>/g)).toHaveLength(1);
+      const title = html.match(/<title>(.*?)<\/title>/)?.[1];
+      const description = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
+      const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+      expect(title).toBeTruthy();
+      expect(description).toBeTruthy();
+      expect(canonical).toBe(`https://sanatandharamsewakendra.org/${route}`);
+      return { title, description, canonical };
+    });
+
+    expect(new Set(records.map(({ title }) => title)).size).toBe(routes.length);
+    expect(new Set(records.map(({ description }) => description)).size).toBe(routes.length);
+  });
+
+  it('keeps the about story to verified values and milestones', () => {
+    const html = readBuilt('about/index.html');
+    for (const value of ['Seva', 'Integrity', 'Education', 'Empowerment', 'Harmony', 'Inclusiveness']) {
+      expect(html).toContain(`>${value}<`);
+    }
+    expect(html).toContain('>2020<');
+    expect(html).toContain('>2022<');
+  });
+
+  it('renders all nine numbered program sections from shared content', () => {
+    const html = readBuilt('programs/index.html');
+    expect(html.match(/data-program-number="0[1-9]"/g)).toHaveLength(9);
+    for (const number of ['01', '02', '03', '04', '05', '06', '07', '08', '09']) {
+      expect(html).toContain(`data-program-number="${number}"`);
+    }
+  });
+
+  it('shows the complete education pathway and supplied vocational areas', () => {
+    const html = readBuilt('education-skills/index.html');
+    for (const item of ['Learn', 'Practice', 'Build Confidence', 'Create Opportunity', 'Tailoring', 'Screen Printing', 'Creative Skills', 'Employment-Oriented Training']) {
+      expect(html).toContain(`>${item}<`);
+    }
+  });
+
+  it('shows all community themes and the seven supplied awareness topics', () => {
+    const html = readBuilt('community-development/index.html');
+    for (const item of ['Women Empowerment', 'Mother &amp; Child Care', 'Health Awareness', 'Environmental Awareness', 'Road Safety', 'Community Outreach']) {
+      expect(html).toContain(item);
+    }
+    for (const topic of ['Nutrition', 'Seasonal diseases', 'Clean drinking water', 'ORS awareness', 'Parenting', 'Savings awareness', 'Community responsibility']) {
+      expect(html).toContain(`>${topic}<`);
+    }
+  });
+});

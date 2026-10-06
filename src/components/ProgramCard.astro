@@ -6,7 +6,7 @@ interface Props { program: Program; reverse?: boolean }
 const { program, reverse = false } = Astro.props;
 ---
 
-<article class:list={['program-story', { 'program-story--reverse': reverse }]}>
+<article class:list={['program-story', { 'program-story--reverse': reverse }]} data-program-number={program.number}>
   <div class="image-frame program-image">
     <img src={program.image} alt={program.imageAlt} width="900" height="680" loading="lazy" />
     <span class="program-number" aria-hidden="true">{program.number}</span>

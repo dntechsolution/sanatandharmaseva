@@ -1,0 +1,82 @@
+---
+import { ArrowRight, BookOpen, CircleDot, Laptop, LibraryBig, Scissors, Sparkles } from '@lucide/astro';
+import CTASection from '../components/CTASection.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const pathways = ['Learn', 'Practice', 'Build Confidence', 'Create Opportunity'];
+const learningAreas = [
+  { id: 'non-formal-education', title: 'Non-Formal Education', description: 'Flexible support that complements formal learning and welcomes different starting points.', icon: BookOpen },
+  { id: 'vocational-skills', title: 'Vocational Skills', description: 'Hands-on learning focused on practical familiarity and employment-oriented confidence.', icon: Scissors },
+  { id: 'digital-learning', title: 'Computer & Digital Learning', description: 'Foundational computer learning that helps people navigate an increasingly connected world.', icon: Laptop },
+  { id: 'library-reading', title: 'Library & Reading', description: 'Access to books and shared reading spaces that encourage independent learning.', icon: LibraryBig },
+  { id: 'learning-support', title: 'Learning Support', description: 'Guidance, practice and encouragement that make continued learning feel possible.', icon: Sparkles },
+  { id: 'skills', title: 'Skill Development', description: 'A broader pathway connecting useful abilities with confidence and opportunity.', icon: CircleDot },
+];
+const vocationalAreas = ['Tailoring', 'Screen Printing', 'Creative Skills', 'Employment-Oriented Training'];
+---
+
+<MainLayout title="Education & Skills | Sanatan Dharam Sewa Kendra" description="Education, digital learning, reading promotion and practical vocational skill-development initiatives from Sanatan Dharam Sewa Kendra." canonicalPath="/education-skills">
+  <PageHero eyebrow="Education & skills" title="Education Opens Doors. Skills Create Opportunities." description="A learning pathway that combines foundational knowledge, practical experience and the confidence to keep moving forward." current="Education & Skills" tone="saffron" />
+
+  <section class="section pathway-section">
+    <div class="container">
+      <SectionHeading eyebrow="The learning pathway" title="From Curiosity to Practical Opportunity" description="Learning becomes stronger when people can understand, practise, grow in confidence and apply what they know." align="center" />
+      <ol class="pathway">
+        {pathways.map((item, index) => <li class="reveal"><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong>{index < pathways.length - 1 && <ArrowRight aria-hidden="true" />}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--cream" id="education">
+    <div class="container">
+      <SectionHeading eyebrow="Learning areas" title="Education That Meets People Where They Are" description="Each area supports a different part of the learning journey while remaining connected to everyday life." />
+      <div class="learning-grid">
+        {learningAreas.map(({ icon: Icon, ...area }) => (
+          <article class="learning-card card reveal" id={area.id}>
+            <Icon size={27} stroke-width={1.55} aria-hidden="true" /><h2>{area.title}</h2><p>{area.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section skills-section">
+    <div class="container skills-grid">
+      <div class="image-frame reveal"><img src="/images/vocational-training.webp" alt="Illustrative vocational tailoring workshop" width="900" height="720" loading="lazy" /></div>
+      <div class="skills-copy reveal">
+        <span class="eyebrow">Practical skills</span><h2>Learning Through Making</h2>
+        <p>Vocational development can turn practice into confidence. The organisation profile identifies areas that are practical, creative and oriented toward useful experience.</p>
+        <div class="skill-tags">
+          {vocationalAreas.map((area) => <span>{area}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection eyebrow="Support learning" title="Help Make Education and Skills More Accessible." description="Volunteer your expertise, collaborate as an institution or support learning resources through verified channels." actions={[{ label: 'Become a Volunteer', href: '/get-involved#volunteer', style: 'light' }, { label: 'Partner With Us', href: '/get-involved#partner', style: 'secondary' }]} />
+</MainLayout>
+
+<style>
+  .pathway { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin: 3.5rem 0 0; padding: 0; list-style: none; }
+  .pathway::before { position: absolute; left: 9%; right: 9%; top: 31px; height: 1px; background: var(--line); content: ''; }
+  .pathway li { position: relative; display: grid; justify-items: center; gap: .9rem; text-align: center; }
+  .pathway li span { display: grid; width: 62px; aspect-ratio: 1; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--cream); color: var(--saffron-dark); font-weight: 850; }
+  .pathway li strong { color: var(--maroon); font-family: 'Lora', serif; font-size: 1.15rem; }
+  .pathway li svg { position: absolute; top: 22px; right: -10px; color: var(--saffron); }
+  .learning-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem; }
+  .learning-card { display: grid; min-height: 270px; align-content: start; gap: 1rem; padding: 1.5rem; scroll-margin-top: 100px; }
+  .learning-card svg { color: var(--forest); }
+  .learning-card h2 { color: var(--maroon); font-size: 1.45rem; }
+  .learning-card p { color: var(--muted); font-size: .92rem; }
+  .skills-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(2.5rem, 8vw, 8rem); }
+  .skills-grid .image-frame { aspect-ratio: 4 / 3; }
+  .skills-copy { display: grid; gap: 1.2rem; }
+  .skills-copy h2 { color: var(--maroon); }
+  .skills-copy p { color: var(--muted); }
+  .skill-tags { display: grid; grid-template-columns: repeat(2,1fr); gap: .7rem; margin-top: .5rem; }
+  .skill-tags span { padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 12px; color: var(--forest); font-size: .78rem; font-weight: 800; }
+  @media (max-width: 820px) { .pathway { grid-template-columns: 1fr 1fr; gap: 2.5rem 1rem; } .pathway::before, .pathway li svg { display: none; } .learning-grid { grid-template-columns: repeat(2,1fr); } .skills-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) { .pathway, .learning-grid, .skill-tags { grid-template-columns: 1fr; } }
+</style>
