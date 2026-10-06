@@ -1,26 +1,23 @@
 import { describe, expect, it } from 'vitest';
 import { activities, testimonialPlaceholders } from '../src/data/activities';
 import { galleryItems } from '../src/data/gallery';
-import { primaryNavigation, programNavigation } from '../src/data/navigation';
+import { primaryNavigation } from '../src/data/navigation';
 import { organisation } from '../src/data/organisation';
 import { programs } from '../src/data/programs';
 
 describe('verified content model', () => {
-  it('groups the three program destinations under one Programs label', () => {
+  it('keeps the original ten-item primary navigation', () => {
     expect(primaryNavigation.map(({ label, href }) => [label, href])).toEqual([
       ['Home', '/'],
       ['About Us', '/about'],
+      ['Our Programs', '/programs'],
+      ['Education & Skills', '/education-skills'],
+      ['Community Development', '/community-development'],
       ['Our Reach', '/our-reach'],
       ['Governance', '/governance'],
       ['Gallery', '/gallery'],
       ['Get Involved', '/get-involved'],
       ['Contact', '/contact'],
-    ]);
-
-    expect(programNavigation?.map(({ label, href }) => [label, href])).toEqual([
-      ['Our Programs', '/programs'],
-      ['Education & Skills', '/education-skills'],
-      ['Community Development', '/community-development'],
     ]);
   });
 

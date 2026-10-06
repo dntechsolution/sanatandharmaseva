@@ -43,16 +43,6 @@ describe('built site shell', () => {
     expect(brand.indexOf('<img')).toBeLessThan(brand.indexOf('<span class="brand-copy"'));
     expect(existsSync(dist('images', 'sanatan-dharma-sewa-kendra-logo.webp'))).toBe(true);
   });
-
-  it('groups the three program pages under one Programs control', () => {
-    const html = readBuilt();
-    const desktopNavigation = html.match(/<nav class="desktop-navigation"[\s\S]*?<\/nav>/)?.[0] ?? '';
-
-    expect(desktopNavigation).toMatch(/<summary[^>]*>\s*Programs/);
-    expect(desktopNavigation).toContain('href="/programs"');
-    expect(desktopNavigation).toContain('href="/education-skills"');
-    expect(desktopNavigation).toContain('href="/community-development"');
-  });
 });
 
 describe('home narrative', () => {
