@@ -10,6 +10,7 @@ const site = env.PUBLIC_SITE_URL || 'https://sanatandharamsewakendra.org';
 export default defineConfig({
   site,
   output: 'static',
+  devToolbar: { enabled: false },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
