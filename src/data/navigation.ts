@@ -4,9 +4,13 @@ export const primaryNavigation: NavigationItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
   { label: 'Our Programs', href: '/programs' },
+  { label: 'Education & Skills', href: '/education-skills' },
+  { label: 'Community Development', href: '/community-development' },
   { label: 'Our Reach', href: '/our-reach' },
+  { label: 'Governance', href: '/governance' },
+  { label: 'Gallery', href: '/gallery' },
   { label: 'Get Involved', href: '/get-involved' },
-  { label: 'Explore More', href: '/explore' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export const footerNavigation: NavigationItem[] = [

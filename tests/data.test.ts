@@ -6,14 +6,18 @@ import { organisation } from '../src/data/organisation';
 import { programs } from '../src/data/programs';
 
 describe('verified content model', () => {
-  it('keeps the primary navigation focused on six destinations', () => {
+  it('keeps the original ten-item primary navigation', () => {
     expect(primaryNavigation.map(({ label, href }) => [label, href])).toEqual([
       ['Home', '/'],
       ['About Us', '/about'],
       ['Our Programs', '/programs'],
+      ['Education & Skills', '/education-skills'],
+      ['Community Development', '/community-development'],
       ['Our Reach', '/our-reach'],
+      ['Governance', '/governance'],
+      ['Gallery', '/gallery'],
       ['Get Involved', '/get-involved'],
-      ['Explore More', '/explore'],
+      ['Contact', '/contact'],
     ]);
   });
 
