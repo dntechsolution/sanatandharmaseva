@@ -215,6 +215,8 @@ describe('gallery and contact experiences', () => {
       expect(html).toContain(`>${option}<`);
     }
     expect(html).toContain('I agree to be contacted regarding my enquiry.');
+    expect(html).toContain('data-whatsapp-base="https://wa.me/919999859666"');
+    expect(html).toContain('Send via WhatsApp');
     expect(html).toContain('role="status" aria-live="polite"');
     expect(html).not.toMatch(/<form[^>]+action=/);
   });

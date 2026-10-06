@@ -53,9 +53,8 @@ To replace an image:
 Copy `.env.example` to `.env` for local configuration.
 
 - `PUBLIC_SITE_URL` sets the canonical production origin and sitemap URLs.
-- `PUBLIC_FORM_ENDPOINT` optionally enables remote contact-form delivery.
 
-When `PUBLIC_FORM_ENDPOINT` is empty, the contact form validates locally and explicitly directs the visitor to phone, WhatsApp or email. It does not claim that an enquiry was transmitted.
+The contact form validates locally, then opens a pre-filled message to the organisation's verified WhatsApp number. The visitor reviews and sends the message from WhatsApp; the static website does not store the enquiry.
 
 ## Trust and compliance safeguards
 

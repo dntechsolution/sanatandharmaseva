@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { galleryItems } from '../src/data/gallery';
-import { validateContactForm, submissionMode, type ContactFormInput } from '../src/scripts/contact-form';
+import * as contactFormModule from '../src/scripts/contact-form';
+import type { ContactFormInput } from '../src/scripts/contact-form';
 import { filterGallery } from '../src/scripts/gallery';
+
+const { validateContactForm } = contactFormModule;
 
 const validForm: ContactFormInput = {
   fullName: 'Asha Verma',
@@ -52,9 +55,26 @@ describe('contact form validation', () => {
     expect(validateContactForm({ ...validForm, email: '' })).toEqual({});
   });
 
-  it('uses remote submission only for a configured endpoint', () => {
-    expect(submissionMode('https://forms.example.org/enquiry')).toBe('remote');
-    expect(submissionMode('')).toBe('contact-alternatives');
-    expect(submissionMode(undefined)).toBe('contact-alternatives');
+  it('builds an encoded WhatsApp enquiry containing the visitor details', () => {
+    const buildWhatsAppEnquiryUrl = Reflect.get(contactFormModule, 'buildWhatsAppEnquiryUrl') as
+      | ((baseUrl: string, input: ContactFormInput) => string)
+      | undefined;
+
+    expect(buildWhatsAppEnquiryUrl).toBeTypeOf('function');
+    if (!buildWhatsAppEnquiryUrl) return;
+
+    const url = buildWhatsAppEnquiryUrl('https://wa.me/919999859666', validForm);
+    const message = decodeURIComponent(url.split('?text=')[1] ?? '');
+
+    expect(url).toMatch(/^https:\/\/wa\.me\/919999859666\?text=/);
+    expect(url).not.toContain('\n');
+    expect(message).toBe(
+      'Namaste, I would like to make an enquiry through the Sanatan Dharam Sewa Kendra website.\n\n' +
+      'Full Name: Asha Verma\n' +
+      'Phone: +91 98765 43210\n' +
+      'Email: asha@example.org\n' +
+      'Reason: Volunteer\n' +
+      'Message: I would like to help with community learning.',
+    );
   });
 });

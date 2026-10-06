@@ -26,6 +26,16 @@ export function validateContactForm(input: ContactFormInput): ContactFormErrors 
   return errors;
 }
 
-export function submissionMode(endpoint?: string): 'remote' | 'contact-alternatives' {
-  return endpoint?.trim() ? 'remote' : 'contact-alternatives';
+export function buildWhatsAppEnquiryUrl(baseUrl: string, input: ContactFormInput): string {
+  const lines = [
+    'Namaste, I would like to make an enquiry through the Sanatan Dharam Sewa Kendra website.',
+    '',
+    `Full Name: ${input.fullName.trim()}`,
+    `Phone: ${input.phone.trim()}`,
+  ];
+
+  if (input.email.trim()) lines.push(`Email: ${input.email.trim()}`);
+  lines.push(`Reason: ${input.reason.trim()}`, `Message: ${input.message.trim()}`);
+
+  return `${baseUrl}?text=${encodeURIComponent(lines.join('\n'))}`;
 }

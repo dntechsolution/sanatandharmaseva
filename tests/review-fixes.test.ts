@@ -59,11 +59,11 @@ describe('final review regressions', () => {
   });
 
   it('keeps native enquiry submission disabled until its safe handler is ready', () => {
-    const form = read('src/components/ContactForm.astro');
-    expect(form).toMatch(/<button[^>]+type="submit"[^>]+disabled/);
-    expect(form).toContain('data-form-fallback');
-    expect(form).toContain('<noscript>');
-    expect(form).toContain("submit?.removeAttribute('disabled')");
+    const html = read('dist/contact/index.html');
+    expect(html).toMatch(/<button[^>]+type="submit"[^>]+disabled/);
+    expect(html).toContain('data-form-fallback');
+    expect(html).toContain('<noscript>');
+    expect(html).toMatch(/\.removeAttribute\((?:`|"|')disabled(?:`|"|')\)/);
   });
 
   it('leaves reveal content visible until enhancement initializes', () => {
