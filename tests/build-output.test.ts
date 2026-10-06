@@ -57,6 +57,8 @@ describe('home narrative', () => {
     expect(html).toContain('began its journey in 2020');
     expect(html).toContain('One World. One Family.');
     expect(html).toContain('A Shared Responsibility.');
+    expect(html).toMatch(/<section[^>]+class="[^"]*philosophy-section[^"]*"[^>]+aria-labelledby="philosophy-title"/);
+    expect(html).toContain('id="philosophy-title"');
 
     for (const title of [
       'Education',
