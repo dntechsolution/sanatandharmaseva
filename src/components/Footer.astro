@@ -1,0 +1,174 @@
+---
+import { Mail, MapPin, Phone } from '@lucide/astro';
+import { footerNavigation, involvementNavigation, legalNavigation } from '../data/navigation';
+import { organisation } from '../data/organisation';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-pattern" aria-hidden="true"></div>
+  <div class="container footer-grid">
+    <div class="footer-intro">
+      <a class="footer-brand" href="/">{organisation.name}</a>
+      <p>{organisation.summary}</p>
+    </div>
+    <div>
+      <h2>Quick links</h2>
+      <ul>
+        {footerNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2>Get involved</h2>
+      <ul>
+        {involvementNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul class="contact-list">
+        <li><MapPin size={17} aria-hidden="true" /><span>Ayodhya, Uttar Pradesh</span></li>
+        <li><Phone size={17} aria-hidden="true" /><a href={organisation.phoneHref}>{organisation.phoneDisplay}</a></li>
+        <li><Mail size={17} aria-hidden="true" /><a href={`mailto:${organisation.email}`}>{organisation.email}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© {year} Sanatan Dharam Sewa Kendra. All Rights Reserved.</p>
+    <nav aria-label="Legal navigation">
+      {legalNavigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(4rem, 8vw, 7rem) 0 1.4rem;
+    background: #4c1f1c;
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .footer-pattern {
+    position: absolute;
+    top: -10rem;
+    right: -8rem;
+    width: 30rem;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3rem rgba(255, 255, 255, 0.025), 0 0 0 7rem rgba(255, 255, 255, 0.018);
+  }
+
+  .footer-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .footer-intro p {
+    max-width: 33ch;
+    margin-top: 1.25rem;
+  }
+
+  .footer-brand {
+    color: var(--white);
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-weight: 600;
+  }
+
+  h2 {
+    margin-bottom: 1.2rem;
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li,
+  a {
+    font-size: 0.9rem;
+  }
+
+  a {
+    transition: color 160ms ease;
+  }
+
+  a:hover {
+    color: #ffc28f;
+  }
+
+  .contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .contact-list svg {
+    flex: 0 0 auto;
+    margin-top: 0.32rem;
+    color: #f39a54;
+  }
+
+  .contact-list a {
+    overflow-wrap: anywhere;
+  }
+
+  .footer-bottom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .footer-bottom p,
+  .footer-bottom a {
+    font-size: 0.72rem;
+  }
+
+  .footer-bottom nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 580px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .footer-bottom nav {
+      justify-content: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sanatandharamsewakendra.org/sitemap-index.xml

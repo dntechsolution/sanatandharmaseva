@@ -1,0 +1,66 @@
+---
+import Footer from '../components/Footer.astro';
+import FloatingContact from '../components/FloatingContact.astro';
+import Header from '../components/Header.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import { organisation } from '../data/organisation';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  image?: string;
+}
+
+const { title, description, canonicalPath, image } = Astro.props;
+const siteOrigin = Astro.site ?? new URL('https://sanatandharamsewakendra.org');
+const canonical = new URL(canonicalPath, siteOrigin);
+const imageUrl = image ? new URL(image, siteOrigin) : undefined;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: organisation.name,
+  url: siteOrigin.href,
+  telephone: '+91-9999859666',
+  email: organisation.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'H-475, Saketpuri Phase-2, Ranopali',
+    addressLocality: organisation.address.locality,
+    addressRegion: organisation.address.region,
+    postalCode: organisation.address.postalCode,
+    addressCountry: organisation.address.country,
+  },
+};
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FFFDF7" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingContact />
+    <SiteScripts />
+  </body>
+</html>
