@@ -1,0 +1,52 @@
+---
+import { BookOpen, HandCoins, HeartHandshake, HeartPulse, MessageCircle, Phone, ShieldCheck, Users } from '@lucide/astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { organisation } from '../data/organisation';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const areas = [
+  { title: 'Education', icon: BookOpen }, { title: 'Skill Development', icon: HandCoins }, { title: 'Community Outreach', icon: Users },
+  { title: 'Women Empowerment', icon: HeartHandshake }, { title: 'Health Awareness', icon: HeartPulse }, { title: 'Learning Resources', icon: BookOpen },
+];
+---
+<MainLayout title="Donate & Support | Sanatan Dharam Sewa Kendra" description="Contact Sanatan Dharam Sewa Kendra for current, verified donation information supporting education, skills and community development." canonicalPath="/donate">
+  <PageHero eyebrow="Support our mission" title="Your Support Can Help Build Opportunity." description="Choose a verified contact channel for current donation information. No outdated or unverified payment details are published here." current="Donate" tone="saffron" />
+  <section class="section donation-section">
+    <div class="container donation-grid">
+      <div class="donation-panel reveal">
+        <ShieldCheck size={36} stroke-width={1.3} aria-hidden="true" />
+        <span class="eyebrow">Verified details only</span>
+        <h2>Contact Before You Contribute</h2>
+        <p class="donation-message">For current donation and bank details, please contact Sanatan Dharam Sewa Kendra directly or use the verified payment information displayed by the organisation.</p>
+        <div class="donation-actions">
+          <a class="button button--primary" href={organisation.phoneHref}><Phone size={18} aria-hidden="true" />Call for Donation Details</a>
+          <a class="button button--light" href={organisation.whatsappHref} target="_blank" rel="noreferrer"><MessageCircle size={18} aria-hidden="true" />WhatsApp Us</a>
+          <a class="button button--secondary" href="/contact">Contact Us</a>
+        </div>
+      </div>
+      <div class="transparency-note reveal"><HandCoins size={46} stroke-width={1.2} aria-hidden="true" /><h2>Transparency Matters</h2><p>Donation details should always be confirmed through the organisation’s verified phone, WhatsApp or contact channel. Ask for the current process and any documentation relevant to your contribution.</p></div>
+    </div>
+  </section>
+  <section class="section section--cream">
+    <div class="container"><SectionHeading eyebrow="Potential support areas" title="Where Responsible Support Can Help" description="Contributions may support these broad mission areas. Current priorities should be confirmed directly with the organisation." /><div class="support-grid">{areas.map(({ title, icon: Icon }) => <article class="card reveal"><Icon size={25} aria-hidden="true" /><h3>{title}</h3></article>)}</div></div>
+  </section>
+</MainLayout>
+<style>
+  .donation-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; }
+  .donation-panel { display: grid; gap: 1.2rem; padding: clamp(1.5rem,5vw,4rem); border-radius: var(--radius-lg); background: var(--forest-dark); color: white; }
+  .donation-panel > svg { color: #ffc28f; }
+  .donation-panel h2 { color: white; }
+  .donation-message { max-width: 720px; color: rgba(255,255,255,.78); font-size: 1.08rem; }
+  .donation-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .5rem; }
+  .transparency-note { display: grid; align-content: end; gap: 1rem; padding: clamp(1.5rem,4vw,3rem); border-radius: var(--radius-lg); background: var(--cream-2); }
+  .transparency-note svg { color: var(--saffron); }
+  .transparency-note h2 { color: var(--maroon); font-size: 1.7rem; }
+  .transparency-note p { color: var(--muted); }
+  .support-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem; }
+  .support-grid article { display: flex; min-height: 150px; align-items: center; gap: 1rem; padding: 1.3rem; }
+  .support-grid svg { color: var(--forest); }
+  .support-grid h3 { color: var(--maroon); font-family: 'Manrope',sans-serif; font-size: .95rem; font-weight: 800; }
+  @media (max-width: 850px) { .donation-grid { grid-template-columns: 1fr; } .support-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .donation-actions, .support-grid { display: grid; grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,57 @@
+---
+import { ArrowRight, BriefcaseBusiness, HandCoins, HeartHandshake, Users } from '@lucide/astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const paths = [
+  { id: 'volunteer', number: '01', title: 'Volunteer', description: 'Share your time, skills and experience.', items: ['Teaching', 'Mentoring', 'Community Outreach', 'Skill Training', 'Event Support', 'Digital Support'], href: '/contact?reason=volunteer', cta: 'Become a Volunteer', icon: Users },
+  { id: 'partner', number: '02', title: 'Partner', description: 'Collaborate through professional and institutional strengths.', items: ['Corporate CSR Partner', 'Educational Institution', 'Healthcare Professional', 'NGO', 'Community Organisation', 'Professional Network'], href: '/contact?reason=partnership', cta: 'Partner With Us', icon: HeartHandshake },
+  { id: 'support', number: '03', title: 'Support', description: 'Support educational and social-development initiatives through financial or in-kind contribution.', items: ['Education', 'Learning Resources', 'Skills', 'Community Outreach', 'Women Empowerment', 'Health Awareness'], href: '/donate', cta: 'Support Our Mission', icon: HandCoins },
+];
+---
+<MainLayout title="Get Involved | Volunteer, Partner or Support" description="Volunteer, collaborate or responsibly support education and community-development initiatives with Sanatan Dharam Sewa Kendra." canonicalPath="/get-involved">
+  <PageHero eyebrow="Get involved" title="Be Part of the Change." description="Contribute time, expertise, institutional strength or verified support to help community initiatives grow responsibly." current="Get Involved" tone="saffron" />
+  <section class="section involvement-intro">
+    <div class="container"><SectionHeading eyebrow="Three ways to participate" title="Choose the Path That Fits You" description="Every form of participation begins with a conversation about needs, capacity and responsible involvement." align="center" /></div>
+  </section>
+  <section class="section section--cream paths-section">
+    <div class="container paths-grid">
+      {paths.map(({ icon: Icon, ...path }) => (
+        <article class="path-card reveal" id={path.id}>
+          <div class="path-head"><span>{path.number}</span><Icon size={30} stroke-width={1.5} aria-hidden="true" /></div>
+          <h2>{path.title}</h2><p>{path.description}</p>
+          <ul>{path.items.map((item) => <li>{item}</li>)}</ul>
+          <a class="button button--primary" href={path.href}>{path.cta}<ArrowRight size={18} aria-hidden="true" /></a>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section participation-note">
+    <div class="container note-grid">
+      <BriefcaseBusiness size={44} stroke-width={1.2} aria-hidden="true" />
+      <div><h2>Thoughtful Participation Matters</h2><p>Before any engagement begins, the organisation can clarify the current need, expected role and appropriate next step. This protects communities and helps every contribution remain useful.</p></div>
+    </div>
+  </section>
+</MainLayout>
+<style>
+  .involvement-intro { padding-bottom: 2rem; }
+  .paths-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .path-card { display: grid; min-height: 600px; grid-template-rows: auto auto auto 1fr auto; gap: 1.1rem; padding: clamp(1.4rem,3vw,2rem); border: 1px solid var(--line); border-radius: var(--radius-md); background: white; box-shadow: var(--shadow-sm); scroll-margin-top: 100px; }
+  .path-card:nth-child(2) { transform: translateY(-2rem); background: var(--forest); color: white; }
+  .path-head { display: flex; align-items: center; justify-content: space-between; color: var(--saffron); }
+  .path-head span { font-size: .72rem; font-weight: 850; }
+  .path-card h2 { color: var(--maroon); }
+  .path-card > p { color: var(--muted); }
+  .path-card:nth-child(2) h2, .path-card:nth-child(2) p { color: inherit; }
+  .path-card:nth-child(2) > p { opacity: .74; }
+  ul { display: grid; align-content: start; gap: .7rem; margin: .5rem 0; padding: 0; list-style: none; }
+  li { position: relative; padding-left: 1.2rem; font-size: .86rem; font-weight: 700; }
+  li::before { position: absolute; left: 0; top: .72em; width: 6px; height: 6px; border-radius: 50%; background: var(--saffron); content: ''; }
+  .note-grid { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 2rem; max-width: 850px; }
+  .note-grid svg { color: var(--forest); }
+  .note-grid h2 { color: var(--maroon); font-size: 1.8rem; }
+  .note-grid p { margin-top: .7rem; color: var(--muted); }
+  @media (max-width: 850px) { .paths-grid { grid-template-columns: 1fr; } .path-card { min-height: 0; } .path-card:nth-child(2) { transform: none; } }
+  @media (max-width: 520px) { .note-grid { grid-template-columns: 1fr; } }
+</style>

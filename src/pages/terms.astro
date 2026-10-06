@@ -1,0 +1,12 @@
+---
+import PageHero from '../components/PageHero.astro';
+import PolicyArticle from '../components/PolicyArticle.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+const sections = [
+  { title: 'Informational purpose', paragraphs: ['This website presents organisational information, programme themes, governance details and ways to get involved. It does not create a contractual commitment or guarantee that a particular programme is currently available in every location.'] },
+  { title: 'Accuracy and updates', paragraphs: ['The organisation aims to keep public information clear and current. Programme formats, priorities and contact processes may change, so visitors should confirm time-sensitive details directly.'] },
+  { title: 'Responsible use', paragraphs: ['Visitors should not misuse the website, attempt to interfere with its operation or reproduce organisational information in a misleading way.'] },
+  { title: 'External communication', paragraphs: ['Phone, WhatsApp and email links open external services. Their operation and privacy practices are governed by their respective providers.'] },
+];
+---
+<MainLayout title="Terms & Conditions | Sanatan Dharam Sewa Kendra" description="Terms for using the Sanatan Dharam Sewa Kendra informational website and its contact pathways." canonicalPath="/terms"><PageHero eyebrow="Policy" title="Terms & Conditions" description="Simple terms for using this informational website responsibly." current="Terms & Conditions" tone="maroon" /><PolicyArticle intro="By using this website, you acknowledge that its content is provided for general organisational information and direct communication." sections={sections} /></MainLayout>

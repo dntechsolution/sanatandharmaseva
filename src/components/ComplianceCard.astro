@@ -1,0 +1,23 @@
+---
+import { FileCheck, FileClock } from '@lucide/astro';
+import type { ComplianceItem } from '../data/types';
+interface Props { item: ComplianceItem }
+const { item } = Astro.props;
+---
+<article class="compliance-card card reveal" data-compliance>
+  <span class="compliance-icon"><FileCheck size={25} stroke-width={1.55} aria-hidden="true" /></span>
+  <div><h3>{item.title}</h3><strong>{item.value}</strong></div>
+  {item.documentUrl ? (
+    <a href={item.documentUrl} data-certificate>View Certificate</a>
+  ) : (
+    <p><FileClock size={15} aria-hidden="true" />Document available on request.</p>
+  )}
+</article>
+<style>
+  .compliance-card { display: grid; min-height: 240px; grid-template-columns: auto 1fr; align-content: start; gap: 1.1rem; padding: 1.35rem; }
+  .compliance-icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 14px; background: color-mix(in srgb,var(--forest) 11%,white); color: var(--forest); }
+  h3 { color: var(--maroon); font-family: 'Manrope',sans-serif; font-size: .83rem; font-weight: 800; }
+  strong { display: block; margin-top: .5rem; color: var(--ink); font-family: 'Lora',serif; font-size: 1.2rem; font-weight: 600; }
+  p { grid-column: 1 / -1; display: flex; align-items: center; gap: .45rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .74rem; }
+  a { grid-column: 1 / -1; color: var(--forest); font-size: .76rem; font-weight: 800; }
+</style>

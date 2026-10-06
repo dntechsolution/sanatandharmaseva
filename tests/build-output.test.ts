@@ -136,3 +136,50 @@ describe('organisation and program page family', () => {
     }
   });
 });
+
+describe('transparency and participation pages', () => {
+  const routes = ['our-reach', 'governance', 'get-involved', 'donate', 'privacy-policy', 'terms', 'donation-policy'];
+
+  it('builds the complete transparency and participation route set', () => {
+    for (const route of routes) {
+      const html = readBuilt(`${route}/index.html`);
+      expect(html.match(/<h1(?:\s[^>]*)?>/g)).toHaveLength(1);
+      expect(html).toContain(`<link rel="canonical" href="https://sanatandharamsewakendra.org/${route}">`);
+    }
+  });
+
+  it('states reach without unsupported totals', () => {
+    const html = readBuilt('our-reach/index.html');
+    for (const item of ['Delhi', 'Uttar Pradesh', 'Haryana', 'Rajasthan', 'Uttarakhand', 'Chhattisgarh', 'New Delhi', 'Prayagraj', 'Purvanchal', 'Ayodhya', 'Project Offices', 'Community Centres', 'Vocational Training Facilities', 'Non-Formal Education Centres', 'Library', 'Village Chaupals', 'Community Outreach']) {
+      expect(html).toContain(item);
+    }
+    expect(html).not.toMatch(/\d+[,+]?\s*(beneficiaries|people reached|centres)/i);
+    expect(html).toContain('role="img"');
+  });
+
+  it('renders the complete governance chain and request-only compliance cards', () => {
+    const html = readBuilt('governance/index.html');
+    for (const item of ['Board of Trustees', 'Executive Committee', 'Management Committee', 'Chief Executive', 'Community Organisers', 'Social Workers / Teachers / Instructors', 'Volunteers', 'Beneficiaries', 'Ravindra Patel', 'Ganesh Kumar Chaudhary', 'Vinod Sahani', 'Virendra Kumar', '534/2022–2023', '31 August 2022', '12A Registration', '80G Registration', 'NGO Darpan', 'CSR-1']) {
+      expect(html).toContain(item);
+    }
+    expect(html.match(/Document available on request\./g)).toHaveLength(6);
+    expect(html).not.toMatch(/<a[^>]+data-certificate/);
+  });
+
+  it('keeps donation information verified and excludes payment credentials', () => {
+    const html = readBuilt('donate/index.html');
+    expect(html).toContain('For current donation and bank details, please contact Sanatan Dharam Sewa Kendra directly or use the verified payment information displayed by the organisation.');
+    expect(html).toContain('href="tel:+919999859666"');
+    expect(html).toContain('https://wa.me/919999859666');
+    expect(html).toContain('href="/contact"');
+    expect(html).not.toMatch(/account\s*(number|no\.)|a\/c\s*no|\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
+  });
+
+  it('keeps policy pages informational and contactable', () => {
+    for (const route of ['privacy-policy', 'terms', 'donation-policy']) {
+      const html = readBuilt(`${route}/index.html`);
+      expect(html).toContain('href="/contact"');
+      expect(html).not.toMatch(/government[ -]affiliated|government[ -]approved|guaranteed tax benefit/i);
+    }
+  });
+});

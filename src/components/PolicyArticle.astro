@@ -1,0 +1,32 @@
+---
+interface Section { title: string; paragraphs: string[] }
+interface Props { intro: string; sections: Section[] }
+const { intro, sections } = Astro.props;
+---
+<section class="section policy-wrap">
+  <article class="container policy-article">
+    <p class="policy-intro">{intro}</p>
+    {sections.map((section) => (
+      <section>
+        <h2>{section.title}</h2>
+        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    ))}
+    <aside>
+      <strong>Questions about this policy?</strong>
+      <p>Please <a href="/contact">contact Sanatan Dharam Sewa Kendra</a> for clarification.</p>
+    </aside>
+  </article>
+</section>
+<style>
+  .policy-article { max-width: 850px; }
+  .policy-intro { padding-bottom: 2rem; border-bottom: 1px solid var(--line); color: var(--maroon); font-family: 'Lora',serif; font-size: clamp(1.25rem,2vw,1.65rem); line-height: 1.55; }
+  section section { padding-block: 2.2rem; border-bottom: 1px solid var(--line); }
+  h2 { margin-bottom: 1rem; color: var(--maroon); font-size: clamp(1.35rem,2.2vw,1.8rem); }
+  p { color: var(--muted); }
+  p + p { margin-top: .8rem; }
+  aside { margin-top: 2.5rem; padding: 1.4rem; border-radius: var(--radius-sm); background: var(--cream-2); }
+  aside strong { color: var(--forest); }
+  aside p { margin-top: .4rem; }
+  aside a { color: var(--saffron-dark); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+</style>

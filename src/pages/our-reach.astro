@@ -1,0 +1,69 @@
+---
+import { Building, LibraryBig, MapPin, School, Speech, Store, Users, Wrench } from '@lucide/astro';
+import CTASection from '../components/CTASection.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { organisation } from '../data/organisation';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const resourceIcons = [Building, Users, Wrench, School, LibraryBig, Speech, MapPin];
+---
+<MainLayout title="Our Reach | Community Action Across North India" description="Explore the states, cities and community-resource formats connected with Sanatan Dharam Sewa Kendra's social-development work." canonicalPath="/our-reach">
+  <PageHero eyebrow="Our reach" title="Community Action Across North India" description="A developing network of places, community relationships and practical resource formats—presented without unsupported beneficiary totals." current="Our Reach" tone="green" />
+
+  <section class="section reach-section">
+    <div class="container reach-grid">
+      <div class="map-card reveal">
+        <svg viewBox="0 0 640 660" role="img" aria-labelledby="reach-map-title reach-map-desc">
+          <title id="reach-map-title">Schematic representation of areas connected with the organisation</title>
+          <desc id="reach-map-desc">A non-geographic illustration highlighting Delhi, Uttar Pradesh, Haryana, Rajasthan, Uttarakhand and Chhattisgarh, with New Delhi, Prayagraj, Purvanchal and Ayodhya named.</desc>
+          <defs><linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f0e4"/><stop offset="1" stop-color="#eadac6"/></linearGradient></defs>
+          <path d="M243 30 306 62l50 73 74 36 29 68 76 55-32 73 14 71-81 40-52 116-94 40-72-48-57-109-84-65 25-109-18-76 74-49 41-91Z" fill="url(#land)" stroke="#7b2d26" stroke-width="3" stroke-linejoin="round"/>
+          <g fill="#295d47" stroke="#fffdf7" stroke-width="5">
+            <circle cx="187" cy="217" r="13"/><circle cx="280" cy="197" r="13"/><circle cx="353" cy="264" r="13"/><circle cx="394" cy="354" r="13"/><circle cx="356" cy="428" r="13"/><circle cx="401" cy="517" r="13"/>
+          </g>
+          <g fill="#242424" font-family="Manrope, sans-serif" font-size="17" font-weight="700">
+            <text x="97" y="221">Rajasthan</text><text x="297" y="188">Uttarakhand</text><text x="369" y="258">Delhi</text><text x="412" y="350">Uttar Pradesh</text><text x="237" y="431">Haryana</text><text x="414" y="521">Chhattisgarh</text>
+          </g>
+          <g fill="#e8751a" stroke="#fffdf7" stroke-width="4"><circle cx="370" cy="285" r="8"/><circle cx="405" cy="377" r="8"/><circle cx="451" cy="345" r="8"/><circle cx="464" cy="369" r="8"/></g>
+        </svg>
+        <p>Illustrative schematic—not a geographic boundary map.</p>
+      </div>
+      <div class="reach-copy reveal">
+        <SectionHeading eyebrow="Places named in the profile" title="A Regional View, Without Inflated Claims" description="The organisation profile identifies work or community connection across six states and specific places. Exact project totals are intentionally not claimed." />
+        <div class="state-tags">{organisation.reach.states.map((state) => <span>{state}</span>)}</div>
+        <div class="places">
+          {organisation.reach.highlightedPlaces.map((place) => <article><MapPin size={18} aria-hidden="true" /><strong>{place}</strong></article>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <SectionHeading eyebrow="Community resources" title="Places and Formats That Bring Work Closer" description="These resource types help describe how education, training, reading and outreach can be organised locally. No quantities are implied." />
+      <div class="resource-grid">
+        {organisation.reach.resources.map((resource, index) => { const Icon = resourceIcons[index] ?? Store; return <article class="resource-card card reveal"><Icon size={24} stroke-width={1.55} aria-hidden="true" /><h3>{resource}</h3></article> })}
+      </div>
+    </div>
+  </section>
+  <CTASection eyebrow="Connect locally" title="Interested in Community Collaboration?" description="Start a conversation about education, skills, awareness or community outreach in your area." actions={[{ label: 'Partner With Us', href: '/get-involved#partner', style: 'light' }, { label: 'Contact Us', href: '/contact', style: 'secondary' }]} />
+</MainLayout>
+<style>
+  .reach-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(3rem,8vw,8rem); }
+  .map-card { padding: clamp(1rem,3vw,2rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: radial-gradient(circle at 70% 20%,#fff 0,var(--cream-2) 72%); box-shadow: var(--shadow-sm); }
+  .map-card p { text-align: center; color: var(--muted); font-size: .7rem; }
+  .reach-copy { display: grid; gap: 2rem; }
+  .state-tags { display: flex; flex-wrap: wrap; gap: .55rem; }
+  .state-tags span { padding: .55rem .8rem; border: 1px solid var(--line); border-radius: 999px; color: var(--forest); font-size: .74rem; font-weight: 800; }
+  .places { display: grid; grid-template-columns: repeat(2,1fr); gap: .75rem; }
+  .places article { display: flex; align-items: center; gap: .6rem; padding: 1rem; border-radius: 14px; background: var(--cream-2); }
+  .places svg { color: var(--saffron); }
+  .places strong { font-size: .85rem; }
+  .resource-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 3rem; }
+  .resource-card { display: grid; min-height: 180px; align-content: center; gap: 1rem; padding: 1.25rem; }
+  .resource-card svg { color: var(--forest); }
+  .resource-card h3 { color: var(--maroon); font-size: 1.1rem; }
+  @media (max-width: 860px) { .reach-grid { grid-template-columns: 1fr; } .resource-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px) { .places, .resource-grid { grid-template-columns: 1fr; } }
+</style>

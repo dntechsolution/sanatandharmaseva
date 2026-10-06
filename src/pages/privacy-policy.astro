@@ -1,0 +1,12 @@
+---
+import PageHero from '../components/PageHero.astro';
+import PolicyArticle from '../components/PolicyArticle.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+const sections = [
+  { title: 'Information you choose to share', paragraphs: ['When you contact the organisation, you may provide your name, phone number, email address, reason for contact and message. Please avoid including sensitive personal information that is not needed for your enquiry.'] },
+  { title: 'How information may be used', paragraphs: ['Contact information may be used to respond to your enquiry, discuss volunteering or partnership, or provide requested donation information. It should not be treated as consent for unrelated communication.'] },
+  { title: 'Static website and form delivery', paragraphs: ['This is a static informational website. Form delivery depends on the configured form service. If no service is configured, the website will direct you to phone and email alternatives rather than claim that a message was sent.'] },
+  { title: 'Your choices', paragraphs: ['You may contact the organisation to ask how an enquiry has been handled or to request correction of information you previously supplied.'] },
+];
+---
+<MainLayout title="Privacy Policy | Sanatan Dharam Sewa Kendra" description="Privacy information for visitors contacting Sanatan Dharam Sewa Kendra through this static website." canonicalPath="/privacy-policy"><PageHero eyebrow="Policy" title="Privacy Policy" description="A clear explanation of how information shared through this website may be handled." current="Privacy Policy" tone="green" /><PolicyArticle intro="We collect only the information you choose to provide when starting a conversation with the organisation." sections={sections} /></MainLayout>

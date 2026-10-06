@@ -1,0 +1,59 @@
+---
+import { ArrowDown, ShieldCheck } from '@lucide/astro';
+import ComplianceCard from '../components/ComplianceCard.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { organisation } from '../data/organisation';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const initials = (name: string) => name.split(' ').map((part) => part[0]).join('').slice(0, 2);
+---
+<MainLayout title="Governance & Compliance | Sanatan Dharam Sewa Kendra" description="View the governance structure, board members, registration and compliance information of Sanatan Dharam Sewa Kendra." canonicalPath="/governance">
+  <PageHero eyebrow="Governance & transparency" title="Responsible Governance. Transparent Social Action." description="Clear roles, verified organisational facts and careful communication form the foundation for accountable service." current="Governance" tone="maroon" />
+
+  <section class="section governance-section">
+    <div class="container">
+      <SectionHeading eyebrow="Organisation structure" title="Responsibility, From Oversight to Community Action" description="The hierarchy shows how governance, management, delivery and participation connect. On mobile, it becomes a simple vertical chain." align="center" />
+      <ol class="hierarchy" aria-label="Organisation hierarchy">
+        {organisation.governanceHierarchy.map((level, index) => (
+          <li class="reveal"><span>{level}</span>{index < organisation.governanceHierarchy.length - 1 && <ArrowDown size={18} aria-hidden="true" />}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <SectionHeading eyebrow="Board members" title="People Entrusted With Governance" description="Initials are used because verified profile photographs were not supplied." />
+      <div class="board-grid">
+        {organisation.board.map((member) => (
+          <article class="board-card card reveal"><span aria-hidden="true">{initials(member.name)}</span><div><h3>{member.name}</h3><p>{member.role}</p></div></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section compliance-section">
+    <div class="container">
+      <div class="compliance-head"><SectionHeading eyebrow="Registration & compliance" title="Verified Organisational Information" description="Certificate links remain disabled until authentic files are supplied. Documents can be requested directly from the organisation." /><ShieldCheck size={54} stroke-width={1.1} aria-hidden="true" /></div>
+      <div class="compliance-grid">{organisation.compliance.map((item) => <ComplianceCard item={item} />)}</div>
+    </div>
+  </section>
+</MainLayout>
+<style>
+  .hierarchy { display: grid; max-width: 720px; gap: 0; margin: 3.5rem auto 0; padding: 0; list-style: none; }
+  .hierarchy li { display: grid; justify-items: center; }
+  .hierarchy li span { width: min(100%, calc(390px + var(--step,0px))); padding: .9rem 1.2rem; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--maroon); font-size: .86rem; font-weight: 800; text-align: center; box-shadow: var(--shadow-sm); }
+  .hierarchy li:nth-child(2n) span { background: var(--cream-2); }
+  .hierarchy svg { margin-block: .55rem; color: var(--saffron); }
+  .board-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 3rem; }
+  .board-card { display: grid; min-height: 260px; align-content: space-between; gap: 2rem; padding: 1.4rem; }
+  .board-card > span { display: grid; width: 80px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--forest); color: white; font-family: 'Lora',serif; font-size: 1.45rem; }
+  .board-card h3 { color: var(--maroon); font-size: 1.25rem; }
+  .board-card p { margin-top: .35rem; color: var(--saffron-dark); font-size: .72rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+  .compliance-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+  .compliance-head > svg { color: var(--forest); }
+  .compliance-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem; }
+  @media (max-width: 900px) { .board-grid, .compliance-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .board-grid, .compliance-grid { grid-template-columns: 1fr; } .compliance-head > svg { display: none; } }
+</style>

@@ -1,0 +1,12 @@
+---
+import PageHero from '../components/PageHero.astro';
+import PolicyArticle from '../components/PolicyArticle.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+const sections = [
+  { title: 'Use verified information', paragraphs: ['Confirm current donation instructions directly through the organisation’s published phone, WhatsApp or contact page. This website does not publish unverified payment credentials.'] },
+  { title: 'Purpose and acknowledgement', paragraphs: ['Ask the organisation about current programme priorities, contribution methods and acknowledgement procedures before contributing. Availability may depend on the nature and timing of support.'] },
+  { title: 'Tax and compliance questions', paragraphs: ['The governance page lists registration information supplied by the organisation. Contributors should request the relevant current documents and seek independent professional advice where needed.'] },
+  { title: 'Corrections and enquiries', paragraphs: ['If you believe donation information is unclear or outdated, pause the transaction and contact the organisation before proceeding.'] },
+];
+---
+<MainLayout title="Donation Policy | Sanatan Dharam Sewa Kendra" description="Guidance for verified, responsible contributions to Sanatan Dharam Sewa Kendra and its community initiatives." canonicalPath="/donation-policy"><PageHero eyebrow="Policy" title="Donation Policy" description="Guidance for confirming current details and supporting the organisation responsibly." current="Donation Policy" tone="saffron" /><PolicyArticle intro="Every contribution should use current information confirmed through the organisation’s verified contact channels." sections={sections} /></MainLayout>
