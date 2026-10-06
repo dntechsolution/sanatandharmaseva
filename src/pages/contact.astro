@@ -1,0 +1,48 @@
+---
+import { Mail, MapPin, MessageCircle, Phone } from '@lucide/astro';
+import ContactForm from '../components/ContactForm.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { organisation } from '../data/organisation';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const contacts = [
+  { title: 'Call Us', value: organisation.phoneDisplay, href: organisation.phoneHref, icon: Phone },
+  { title: 'Email Us', value: organisation.email, href: `mailto:${organisation.email}`, icon: Mail },
+  { title: 'Visit Us', value: 'Ayodhya, Uttar Pradesh', href: '#address', icon: MapPin },
+  { title: 'WhatsApp Us', value: 'Start a conversation', href: organisation.whatsappHref, icon: MessageCircle },
+];
+---
+<MainLayout title="Contact | Sanatan Dharam Sewa Kendra" description="Call, email, WhatsApp or visit Sanatan Dharam Sewa Kendra in Ayodhya, Uttar Pradesh, or send a structured enquiry." canonicalPath="/contact">
+  <PageHero eyebrow="Contact" title="Let’s Connect." description="Ask about programmes, volunteering, partnership or current donation information through a verified contact channel." current="Contact" tone="green" />
+  <section class="section contact-section">
+    <div class="container">
+      <div class="contact-cards">
+        {contacts.map(({ icon: Icon, ...contact }) => <a class="contact-card card reveal" href={contact.href} target={contact.title === 'WhatsApp Us' ? '_blank' : undefined} rel={contact.title === 'WhatsApp Us' ? 'noreferrer' : undefined} data-contact-card><Icon size={25} stroke-width={1.55} aria-hidden="true" /><span>{contact.title}</span><strong>{contact.value}</strong></a>)}
+      </div>
+      <div class="contact-grid">
+        <div class="form-copy reveal">
+          <SectionHeading eyebrow="Send an enquiry" title="Tell Us How You’d Like to Connect" description="Choose the reason that best fits your enquiry. Required fields are clearly marked through validation when you continue." />
+          <div class="address-card" id="address"><MapPin size={24} aria-hidden="true" /><div><h2>{organisation.legalName}</h2>{organisation.address.lines.map((line) => <p>{line}</p>)}</div></div>
+        </div>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</MainLayout>
+<style>
+  .contact-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: -7rem; position: relative; z-index: 3; }
+  .contact-card { display: grid; min-height: 200px; align-content: end; gap: .65rem; padding: 1.35rem; transition: transform 180ms ease,border-color 180ms ease; }
+  .contact-card:hover { transform: translateY(-5px); border-color: var(--saffron); }
+  .contact-card svg { margin-bottom: auto; color: var(--forest); }
+  .contact-card span { color: var(--saffron-dark); font-size: .68rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+  .contact-card strong { overflow-wrap: anywhere; color: var(--maroon); font-family: 'Lora',serif; font-size: 1.05rem; font-weight: 600; }
+  .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: clamp(2.5rem,7vw,7rem); margin-top: 5rem; }
+  .form-copy { display: grid; gap: 2rem; }
+  .address-card { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.4rem; border-radius: var(--radius-sm); background: var(--cream-2); scroll-margin-top: 100px; }
+  .address-card svg { color: var(--saffron); }
+  .address-card h2 { margin-bottom: .5rem; color: var(--maroon); font-family: 'Manrope',sans-serif; font-size: .8rem; font-weight: 850; }
+  .address-card p { color: var(--muted); font-size: .83rem; line-height: 1.5; }
+  @media (max-width: 900px) { .contact-cards { grid-template-columns: repeat(2,1fr); } .contact-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .contact-cards { grid-template-columns: 1fr; margin-top: -4rem; } .contact-card { min-height: 160px; } }
+</style>

@@ -1,0 +1,129 @@
+---
+import { ArrowRight } from '@lucide/astro';
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+<form class="contact-form" data-contact-form data-endpoint={endpoint} novalidate>
+  <div class="field-grid">
+    <div class="field">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" name="fullName" type="text" autocomplete="name" aria-describedby="fullName-error" />
+      <p class="field-error" id="fullName-error" data-error-for="fullName"></p>
+    </div>
+    <div class="field">
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="phone-error" />
+      <p class="field-error" id="phone-error" data-error-for="phone"></p>
+    </div>
+  </div>
+  <div class="field-grid">
+    <div class="field">
+      <label for="email">Email <small>(optional)</small></label>
+      <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-error" />
+      <p class="field-error" id="email-error" data-error-for="email"></p>
+    </div>
+    <div class="field">
+      <label for="reason">Reason for Contact</label>
+      <select id="reason" name="reason" aria-describedby="reason-error">
+        <option value="">Select a reason</option>
+        <option>General Enquiry</option><option>Volunteer</option><option>Donation</option><option>CSR Partnership</option><option>Institutional Partnership</option><option>Community Program</option><option>Other</option>
+      </select>
+      <p class="field-error" id="reason-error" data-error-for="reason"></p>
+    </div>
+  </div>
+  <div class="field">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" aria-describedby="message-error"></textarea>
+    <p class="field-error" id="message-error" data-error-for="message"></p>
+  </div>
+  <div class="agreement">
+    <input id="agreement" name="agreement" type="checkbox" aria-describedby="agreement-error" />
+    <label for="agreement">I agree to be contacted regarding my enquiry.</label>
+  </div>
+  <p class="field-error" id="agreement-error" data-error-for="agreement"></p>
+  <div class="form-footer">
+    <button class="button button--primary" type="submit">Send Enquiry <ArrowRight size={18} aria-hidden="true" /></button>
+    <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+  </div>
+</form>
+
+<script>
+  import { submissionMode, validateContactForm, type ContactFormInput } from '../scripts/contact-form';
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = form?.querySelector<HTMLElement>('[data-form-status]');
+
+  function clearErrors() {
+    form?.querySelectorAll<HTMLElement>('[data-error-for]').forEach((node) => { node.textContent = ''; });
+    form?.querySelectorAll<HTMLElement>('[aria-invalid="true"]').forEach((node) => node.removeAttribute('aria-invalid'));
+  }
+
+  function showErrors(errors: ReturnType<typeof validateContactForm>) {
+    const keys = Object.keys(errors) as Array<keyof ContactFormInput>;
+    keys.forEach((key) => {
+      const field = form?.elements.namedItem(key) as HTMLElement | null;
+      const error = form?.querySelector<HTMLElement>(`[data-error-for="${key}"]`);
+      field?.setAttribute('aria-invalid', 'true');
+      if (error) error.textContent = errors[key] ?? '';
+    });
+    (form?.elements.namedItem(keys[0]) as HTMLElement | null)?.focus();
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearErrors();
+    if (status) status.textContent = '';
+    const values = new FormData(form);
+    const input: ContactFormInput = {
+      fullName: String(values.get('fullName') ?? ''),
+      phone: String(values.get('phone') ?? ''),
+      email: String(values.get('email') ?? ''),
+      reason: String(values.get('reason') ?? ''),
+      message: String(values.get('message') ?? ''),
+      agreement: values.get('agreement') === 'on',
+    };
+    const errors = validateContactForm(input);
+    if (Object.keys(errors).length) {
+      showErrors(errors);
+      if (status) status.textContent = 'Check the highlighted fields and try again.';
+      return;
+    }
+
+    const endpoint = form.dataset.endpoint;
+    if (submissionMode(endpoint) === 'contact-alternatives') {
+      if (status) status.textContent = 'Your enquiry has not been sent online. Please call, WhatsApp or email the organisation using the contact options on this page.';
+      return;
+    }
+
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    submit?.setAttribute('disabled', '');
+    if (status) status.textContent = 'Sending your enquiry…';
+    try {
+      const response = await fetch(endpoint!, { method: 'POST', body: values, headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('Request failed');
+      form.reset();
+      if (status) status.textContent = 'Thank you. Your enquiry has been sent.';
+    } catch {
+      if (status) status.textContent = 'The enquiry could not be sent. Please use the phone, WhatsApp or email options on this page.';
+    } finally {
+      submit?.removeAttribute('disabled');
+    }
+  });
+</script>
+
+<style>
+  .contact-form { display: grid; gap: 1.1rem; padding: clamp(1.4rem,4vw,2.5rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: white; box-shadow: var(--shadow-sm); }
+  .field-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .field { display: grid; gap: .45rem; }
+  label { color: var(--ink); font-size: .78rem; font-weight: 800; }
+  label small { color: var(--muted); font-weight: 600; }
+  input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); color: var(--ink); padding: .82rem .9rem; transition: border-color 160ms ease,box-shadow 160ms ease; }
+  textarea { resize: vertical; }
+  input:focus, select:focus, textarea:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(232,117,26,.12); outline: 0; }
+  [aria-invalid="true"] { border-color: #a62c2c; }
+  .field-error { min-height: 1.1rem; color: #9b2f2f; font-size: .7rem; line-height: 1.4; }
+  .agreement { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: .7rem; }
+  .agreement input { width: 18px; height: 18px; margin-top: .24rem; accent-color: var(--forest); }
+  .form-footer { display: flex; align-items: center; gap: 1.2rem; }
+  .form-status { color: var(--muted); font-size: .78rem; line-height: 1.5; }
+  button[disabled] { opacity: .55; cursor: wait; }
+  @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .form-footer { align-items: stretch; flex-direction: column; } }
+</style>

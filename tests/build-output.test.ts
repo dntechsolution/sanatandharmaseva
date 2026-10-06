@@ -183,3 +183,30 @@ describe('transparency and participation pages', () => {
     }
   });
 });
+
+describe('gallery and contact experiences', () => {
+  it('renders eight gallery filters, a live result count and an accessible lightbox', () => {
+    const html = readBuilt('gallery/index.html');
+    expect(html.match(/<button[^>]+data-gallery-filter=/g)).toHaveLength(8);
+    expect(html).toContain('aria-live="polite"');
+    expect(html.match(/loading="lazy"/g)?.length).toBeGreaterThanOrEqual(7);
+    expect(html.match(/data-illustrative="true"/g)).toHaveLength(7);
+    expect(html).toMatch(/<dialog[^>]+aria-labelledby="lightbox-title"/);
+    expect(html).not.toMatch(/actual beneficiaries|our beneficiaries pictured|programme participants pictured/i);
+  });
+
+  it('renders complete labelled contact fields and honest static submission state', () => {
+    const html = readBuilt('contact/index.html');
+    expect(html.match(/data-contact-card/g)).toHaveLength(4);
+    for (const label of ['Full Name', 'Phone', 'Reason for Contact', 'Message']) {
+      expect(html).toContain(`>${label}<`);
+    }
+    expect(html).toMatch(/<label[^>]+for="email"[^>]*>Email/);
+    for (const option of ['General Enquiry', 'Volunteer', 'Donation', 'CSR Partnership', 'Institutional Partnership', 'Community Program', 'Other']) {
+      expect(html).toContain(`>${option}<`);
+    }
+    expect(html).toContain('I agree to be contacted regarding my enquiry.');
+    expect(html).toContain('role="status" aria-live="polite"');
+    expect(html).not.toMatch(/<form[^>]+action=/);
+  });
+});

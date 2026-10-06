@@ -1,0 +1,28 @@
+---
+import { Expand } from '@lucide/astro';
+import type { GalleryItem } from '../data/types';
+interface Props { item: GalleryItem; index: number }
+const { item, index } = Astro.props;
+---
+<article class:list={['gallery-card', { 'gallery-card--tall': index % 3 === 1 }]} data-gallery-item data-category={item.category} data-id={item.id} data-illustrative="true">
+  <button type="button" data-lightbox-open data-src={item.image} data-title={item.title} data-caption={item.caption} aria-label={`Open larger view: ${item.title}`}>
+    <img src={item.image} alt={item.alt} width="780" height={index % 3 === 1 ? '940' : '620'} loading="lazy" />
+    <span class="gallery-shade" aria-hidden="true"></span>
+    <span class="gallery-content"><small>{item.category} · Illustrative</small><strong>{item.title}</strong></span>
+    <span class="gallery-expand" aria-hidden="true"><Expand size={18} /></span>
+  </button>
+</article>
+<style>
+  .gallery-card { break-inside: avoid; margin-bottom: 1rem; }
+  button { position: relative; display: block; width: 100%; overflow: hidden; padding: 0; border: 0; border-radius: var(--radius-md); background: var(--cream-2); color: white; cursor: zoom-in; box-shadow: var(--shadow-sm); text-align: left; }
+  img { width: 100%; aspect-ratio: 1.2; object-fit: cover; transition: transform 600ms cubic-bezier(.2,.7,.2,1); }
+  .gallery-card--tall img { aspect-ratio: .82; }
+  button:hover img { transform: scale(1.04); }
+  .gallery-shade { position: absolute; inset: 0; background: linear-gradient(0deg,rgba(17,33,26,.86),transparent 60%); }
+  .gallery-content { position: absolute; inset: auto 1.2rem 1.2rem; display: grid; gap: .35rem; }
+  .gallery-content small { color: #ffd0aa; font-size: .62rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+  .gallery-content strong { font-family: 'Lora',serif; font-size: 1.25rem; font-weight: 600; }
+  .gallery-expand { position: absolute; top: 1rem; right: 1rem; display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--forest); opacity: 0; transform: translateY(-5px); transition: opacity 180ms ease,transform 180ms ease; }
+  button:hover .gallery-expand, button:focus-visible .gallery-expand { opacity: 1; transform: none; }
+  [hidden] { display: none !important; }
+</style>
