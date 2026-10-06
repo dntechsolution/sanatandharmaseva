@@ -1,0 +1,175 @@
+---
+import { ArrowRight, BookOpen, Images, MessageCircle, Scale, Users } from '@lucide/astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const destinations = [
+  {
+    title: 'Education & Skills',
+    description: 'Explore learning pathways, vocational training and practical skill development.',
+    href: '/education-skills',
+    icon: BookOpen,
+  },
+  {
+    title: 'Community Development',
+    description: 'Read about community participation, awareness and family-focused initiatives.',
+    href: '/community-development',
+    icon: Users,
+  },
+  {
+    title: 'Governance',
+    description: 'View the organisation structure, board information and compliance overview.',
+    href: '/governance',
+    icon: Scale,
+  },
+  {
+    title: 'Gallery',
+    description: 'Browse the illustrative programme and community-development gallery.',
+    href: '/gallery',
+    icon: Images,
+  },
+  {
+    title: 'Contact',
+    description: 'Find verified phone, email, WhatsApp and address information.',
+    href: '/contact',
+    icon: MessageCircle,
+  },
+];
+---
+
+<MainLayout
+  title="Explore More | Sanatan Dharam Sewa Kendra"
+  description="Explore education, community development, governance, gallery and contact pages from one place."
+  canonicalPath="/explore"
+>
+  <PageHero
+    eyebrow="Explore more"
+    title="Find the Information You Need."
+    description="Use this page to reach education, community, governance, gallery and contact information while the main navigation stays simple."
+    current="Explore More"
+    tone="maroon"
+  />
+
+  <section class="section explore-section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="More destinations"
+        title="Continue Exploring Our Work"
+        description="Every existing page remains available. Choose a destination below to continue."
+        align="center"
+      />
+
+      <div class="explore-grid">
+        {destinations.map(({ title, description, href, icon: Icon }, index) => (
+          <a class:list={['explore-card', 'card', 'reveal', { 'explore-card--wide': index === destinations.length - 1 }]} href={href}>
+            <span class="explore-icon"><Icon size={28} stroke-width={1.55} aria-hidden="true" /></span>
+            <span class="explore-number">{String(index + 1).padStart(2, '0')}</span>
+            <h2>{title}</h2>
+            <p>{description}</p>
+            <span class="explore-link">Open page <ArrowRight size={18} aria-hidden="true" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .explore-section {
+    background: linear-gradient(180deg, var(--cream), var(--cream-2));
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .explore-card {
+    position: relative;
+    display: grid;
+    min-height: 330px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1rem;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .explore-card:hover {
+    transform: translateY(-7px);
+    border-color: color-mix(in srgb, var(--saffron) 52%, var(--line));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .explore-card--wide {
+    grid-column: 1 / -1;
+    min-height: 270px;
+  }
+
+  .explore-icon {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    place-items: center;
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--forest) 11%, white);
+    color: var(--forest);
+  }
+
+  .explore-number {
+    color: var(--saffron-dark);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+  }
+
+  h2,
+  p,
+  .explore-link {
+    grid-column: 1 / -1;
+  }
+
+  h2 {
+    color: var(--maroon);
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+  }
+
+  p {
+    max-width: 58ch;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .explore-link {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--forest);
+    font-size: 0.8rem;
+    font-weight: 850;
+  }
+
+  .explore-link svg {
+    transition: transform 180ms ease;
+  }
+
+  .explore-card:hover .explore-link svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 700px) {
+    .explore-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .explore-card,
+    .explore-card--wide {
+      grid-column: auto;
+      min-height: 280px;
+    }
+  }
+</style>

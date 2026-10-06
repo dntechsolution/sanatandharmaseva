@@ -222,6 +222,23 @@ describe('gallery and contact experiences', () => {
   });
 });
 
+describe('explore hub', () => {
+  it('keeps every removed navigation destination accessible from one page', () => {
+    const html = readBuilt('explore/index.html');
+
+    for (const [label, href] of [
+      ['Education &amp; Skills', '/education-skills'],
+      ['Community Development', '/community-development'],
+      ['Governance', '/governance'],
+      ['Gallery', '/gallery'],
+      ['Contact', '/contact'],
+    ]) {
+      expect(html).toContain(`href="${href}"`);
+      expect(html).toContain(label);
+    }
+  });
+});
+
 describe('production output matrix', () => {
   const routeFiles = [
     'index.html',
@@ -235,12 +252,13 @@ describe('production output matrix', () => {
     'get-involved/index.html',
     'donate/index.html',
     'contact/index.html',
+    'explore/index.html',
     'privacy-policy/index.html',
     'terms/index.html',
     'donation-policy/index.html',
   ];
 
-  it('ships fourteen routes with unique titles, descriptions and canonicals', () => {
+  it('ships fifteen routes with unique titles, descriptions and canonicals', () => {
     const metadata = routeFiles.map((file) => {
       const html = readBuilt(file);
       return {
