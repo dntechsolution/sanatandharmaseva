@@ -1,0 +1,18 @@
+---
+import { Quote } from '@lucide/astro';
+interface Props { label: string; description: string }
+const { label, description } = Astro.props;
+---
+<article class="testimonial-card card reveal">
+  <Quote size={24} stroke-width={1.5} aria-hidden="true" />
+  <span>{label}</span>
+  <p>{description}</p>
+  <small>Verified story placeholder</small>
+</article>
+<style>
+  .testimonial-card { display: grid; min-height: 250px; align-content: start; gap: .9rem; padding: 1.5rem; }
+  svg { color: var(--saffron); }
+  span { color: var(--maroon); font-family: 'Lora', serif; font-size: 1.3rem; font-weight: 600; }
+  p { color: var(--muted); font-size: .92rem; }
+  small { align-self: end; margin-top: 1rem; color: var(--forest); font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+</style>

@@ -35,3 +35,49 @@ describe('built site shell', () => {
     expect(existsSync(dist('robots.txt'))).toBe(true);
   });
 });
+
+describe('home narrative', () => {
+  it('moves from mission through programs to participation without invented impact numbers', () => {
+    const html = readBuilt();
+
+    expect(html).toContain('SERVING COMMUNITIES • BUILDING FUTURES');
+    expect(html).toContain('Building Stronger Communities Through Seva, Education &amp; Empowerment');
+    expect(html).toContain('href="/programs"');
+    expect(html).toContain('href="/donate"');
+    expect(html).toContain('Education • Skills • Women Empowerment • Community Development');
+    expect(html).toContain('began its journey in 2020');
+    expect(html).toContain('One World. One Family.');
+    expect(html).toContain('A Shared Responsibility.');
+
+    for (const title of [
+      'Education',
+      'Skill Development',
+      'Women Empowerment',
+      'Health &amp; Family Welfare',
+      'Environment',
+      'Community Development',
+      'Vocational Training',
+      'Computer Education',
+      'Non-Formal Education',
+      'Mother &amp; Child Care',
+      'Environmental Awareness',
+      'Road Safety Awareness',
+      'Science &amp; Technology Promotion',
+      'Library &amp; Reading Promotion',
+    ]) {
+      expect(html).toContain(title);
+    }
+
+    for (const label of ['Opportunity', 'Empowerment', 'Community']) {
+      expect(html).toContain(`>${label}<`);
+    }
+
+    for (const label of ['Beneficiary Story', 'Volunteer Experience', 'Community Partner']) {
+      expect(html).toContain(label);
+    }
+
+    expect(html.match(/data-illustrative="true"/g)?.length).toBeGreaterThanOrEqual(3);
+    expect(html).toContain('href="/get-involved#volunteer"');
+    expect(html).toContain('href="/get-involved#partner"');
+  });
+});

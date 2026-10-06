@@ -1,5 +1,23 @@
 ---
+import { ArrowRight } from '@lucide/astro';
+import CTASection from '../components/CTASection.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Hero from '../components/Hero.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import StatsStrip from '../components/StatsStrip.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import { activities, testimonialPlaceholders } from '../data/activities';
+import { focusAreas, programs } from '../data/programs';
 import MainLayout from '../layouts/MainLayout.astro';
+
+const impactPhilosophy = [
+  { title: 'Education', description: 'Knowledge creates the foundation for informed choices.' },
+  { title: 'Opportunity', description: 'Practical pathways help learning become possibility.' },
+  { title: 'Empowerment', description: 'Confidence grows when people can participate and lead.' },
+  { title: 'Community', description: 'Shared responsibility strengthens local action.' },
+  { title: 'Environment', description: 'Sustainable habits protect everyday well-being.' },
+];
 ---
 
 <MainLayout
@@ -7,18 +25,133 @@ import MainLayout from '../layouts/MainLayout.astro';
   description="Sanatan Dharam Sewa Kendra supports education, vocational development, women empowerment, health awareness and community-development initiatives."
   canonicalPath="/"
 >
-  <section class="section placeholder-home">
-    <div class="container">
-      <h1>Building Stronger Communities Through Seva, Education & Empowerment</h1>
+  <Hero
+    eyebrow="SERVING COMMUNITIES • BUILDING FUTURES"
+    title="Building Stronger Communities Through Seva, Education & Empowerment"
+    description="Inspired by the philosophy of Vasudhaiv Kutumbukam, Sanatan Dharam Sewa Kendra works to create opportunities through education, skills, community development and social empowerment."
+    image="/images/hero-community.webp"
+    imageAlt="Illustrative Indian community learning gathering"
+    primaryLabel="Explore Our Work"
+    primaryHref="/programs"
+    secondaryLabel="Support Our Mission"
+    secondaryHref="/donate"
+    trustLine="Education • Skills • Women Empowerment • Community Development"
+  />
+
+  <section class="section story-section" id="our-story">
+    <div class="container story-grid">
+      <div class="story-collage reveal" aria-label="Illustrative views of education, skills and community service">
+        <div class="image-frame story-main"><img src="/images/community-outreach.webp" alt="Illustrative community outreach gathering" width="820" height="980" loading="lazy" /></div>
+        <div class="image-frame story-small"><img src="/images/vocational-training.webp" alt="Illustrative vocational skills session" width="520" height="420" loading="lazy" /></div>
+        <span class="story-seal"><strong>Since</strong> 2020</span>
+      </div>
+      <div class="story-copy reveal">
+        <span class="eyebrow">Our beginning</span>
+        <h2>Seva With Purpose.<br />Development With Responsibility.</h2>
+        <p>Sanatan Dharam Sewa Kendra began its journey in 2020 with the aim of supporting students and economically disadvantaged communities through education and livelihood opportunities.</p>
+        <p>The organisation works through professionals, teachers, instructors, social workers, community organisers and volunteers committed to meaningful community development.</p>
+        <a class="text-link" href="/about">Discover Our Story <ArrowRight size={18} aria-hidden="true" /></a>
+      </div>
     </div>
   </section>
+
+  <section class="section philosophy-section">
+    <div class="philosophy-rings" aria-hidden="true"><span></span></div>
+    <div class="container philosophy-inner reveal">
+      <span class="philosophy-kicker">VASUDHAIV KUTUMBUKAM</span>
+      <h2>One World. One Family.<br />A Shared Responsibility.</h2>
+      <p>Our work is guided by the belief that sustainable social development begins with education, opportunity, dignity, service and harmony.</p>
+    </div>
+  </section>
+
+  <section class="section focus-section">
+    <div class="container">
+      <SectionHeading eyebrow="Where we serve" title="Connected Areas of Community Action" description="Each focus area responds to a different part of community life. Together, they create a more practical and human path to development." />
+      <div class="focus-grid">
+        {focusAreas.map((area, index) => <FeatureCard {...area} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream programs-section">
+    <div class="container">
+      <SectionHeading eyebrow="Our programs" title="Practical Work, Shaped Around Community Needs" description="From learning and skills to health, safety and environmental awareness, each programme is designed around useful, accessible participation." />
+      <div class="program-list">
+        {programs.map((program, index) => <ProgramCard program={program} reverse={index % 2 === 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section impact-section section--forest">
+    <div class="container">
+      <SectionHeading eyebrow="Impact philosophy" title="Change Is More Than a Number" description="We focus on the qualities that help communities move forward—learning, confidence, opportunity, participation and responsible action." light align="center" />
+      <StatsStrip items={impactPhilosophy} />
+    </div>
+  </section>
+
+  <section class="section activities-section">
+    <div class="container">
+      <SectionHeading eyebrow="Activity framework" title="Learning in Motion" description="These illustrative themes show how future activity updates can be shared. Verified organisation photographs and dates can be added as they become available." />
+      <div class="activity-grid">
+        {activities.map((activity) => (
+          <article class="activity-card reveal" data-illustrative="true">
+            <div class="image-frame"><img src={activity.image} alt={activity.imageAlt} width="720" height="520" loading="lazy" /></div>
+            <span>{activity.category} · Illustrative</span>
+            <h3>{activity.title}</h3>
+            <p>{activity.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream voices-section">
+    <div class="container">
+      <SectionHeading eyebrow="Voices, with consent" title="Stories Will Be Shared Responsibly" description="This section is ready for verified, approved stories. It intentionally contains no fictional names or testimonials." />
+      <div class="voices-grid">
+        {testimonialPlaceholders.map((item) => <TestimonialCard {...item} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow="Build with us"
+    title="Together, We Can Create Meaningful Change."
+    description="Your time, expertise, partnership or contribution can help strengthen educational and community-development initiatives."
+    actions={[
+      { label: 'Donate Now', href: '/donate', style: 'primary' },
+      { label: 'Become a Volunteer', href: '/get-involved#volunteer', style: 'light' },
+      { label: 'Partner With Us', href: '/get-involved#partner', style: 'secondary' },
+    ]}
+  />
 </MainLayout>
 
 <style>
-  .placeholder-home {
-    display: grid;
-    min-height: 70vh;
-    align-items: center;
-    padding-top: calc(var(--header-height) + 3rem);
-  }
+  .story-grid { display: grid; grid-template-columns: minmax(0, 1.03fr) minmax(0, .97fr); align-items: center; gap: clamp(3rem, 8vw, 8rem); }
+  .story-collage { position: relative; min-height: 620px; }
+  .story-main { position: absolute; inset: 0 18% 7% 0; }
+  .story-small { position: absolute; right: 0; bottom: 0; width: 48%; aspect-ratio: 1.08; border: 8px solid var(--cream); }
+  .story-seal { position: absolute; right: 4%; top: 6%; display: grid; width: 104px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--saffron); color: white; font-family: 'Lora', serif; font-size: 1.35rem; line-height: 1; text-align: center; box-shadow: var(--shadow-sm); }
+  .story-seal strong { display: block; font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; }
+  .story-copy { display: grid; gap: 1.25rem; }
+  .story-copy h2 { color: var(--maroon); }
+  .story-copy p { color: var(--muted); }
+  .philosophy-section { overflow: hidden; background: var(--cream-2); }
+  .philosophy-inner { position: relative; z-index: 2; display: grid; min-height: 420px; place-content: center; justify-items: center; text-align: center; }
+  .philosophy-kicker { color: var(--saffron-dark); font-size: .74rem; font-weight: 850; letter-spacing: .24em; }
+  .philosophy-inner h2 { max-width: 850px; margin-top: 1.3rem; color: var(--maroon); }
+  .philosophy-inner p { max-width: 700px; margin-top: 1.3rem; color: var(--muted); font-size: 1.08rem; }
+  .philosophy-rings { position: absolute; left: 50%; top: 50%; width: min(75vw, 720px); aspect-ratio: 1; border: 1px solid rgba(123,45,38,.12); border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 0 4rem rgba(123,45,38,.035), 0 0 0 9rem rgba(123,45,38,.02); }
+  .philosophy-rings span { position: absolute; inset: 34%; border: 1px solid rgba(232,117,26,.3); border-radius: 50%; }
+  .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+  .program-list { display: grid; gap: clamp(5rem, 10vw, 10rem); margin-top: clamp(4rem, 8vw, 7rem); }
+  .impact-section :global(.section-heading) { margin-bottom: 3rem; }
+  .activity-grid, .voices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+  .activity-card { display: grid; gap: .8rem; }
+  .activity-card .image-frame { aspect-ratio: 1.25; margin-bottom: .3rem; }
+  .activity-card > span { color: var(--saffron-dark); font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .activity-card h3 { color: var(--maroon); }
+  .activity-card p { color: var(--muted); font-size: .9rem; }
+  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } .story-collage { min-height: 560px; } .focus-grid, .activity-grid { grid-template-columns: repeat(2, 1fr); } .voices-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 580px) { .story-collage { min-height: 430px; } .story-main { right: 10%; } .story-small { width: 52%; } .story-seal { right: 1%; width: 84px; font-size: 1.1rem; } .focus-grid, .activity-grid { grid-template-columns: 1fr; } }
 </style>

@@ -1,0 +1,36 @@
+---
+import Breadcrumb from './Breadcrumb.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  current: string;
+  tone?: 'green' | 'maroon' | 'saffron';
+}
+
+const { eyebrow, title, description, current, tone = 'green' } = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${tone}`]}>
+  <div class="page-hero-motif" aria-hidden="true"><span></span></div>
+  <div class="container page-hero-inner">
+    <Breadcrumb current={current} />
+    <span class="eyebrow">{eyebrow}</span>
+    <h1>{title}</h1>
+    {description && <p>{description}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero { position: relative; overflow: hidden; padding: calc(var(--header-height) + clamp(4.5rem, 8vw, 8rem)) 0 clamp(4.5rem, 8vw, 7rem); color: white; }
+  .page-hero--green { background: linear-gradient(130deg, #173e30, #295d47); }
+  .page-hero--maroon { background: linear-gradient(130deg, #4b1e1a, #7b2d26); }
+  .page-hero--saffron { background: linear-gradient(130deg, #9c420f, #e8751a); }
+  .page-hero-inner { position: relative; z-index: 2; display: grid; gap: 1.25rem; }
+  h1 { max-width: 900px; }
+  p { max-width: 720px; color: rgba(255,255,255,.8); font-size: clamp(1rem, 1.5vw, 1.16rem); }
+  :global(.page-hero .eyebrow) { color: #ffd8b7; }
+  .page-hero-motif { position: absolute; right: -8rem; top: -10rem; width: min(55vw, 650px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(255,255,255,.025), 0 0 0 8rem rgba(255,255,255,.018); }
+  .page-hero-motif span { position: absolute; inset: 28%; border: 1px solid rgba(255,197,149,.35); border-radius: 50%; }
+</style>

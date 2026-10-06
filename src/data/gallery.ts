@@ -53,8 +53,8 @@ export const galleryItems: GalleryItem[] = [
     title: 'Care for Nature',
     category: 'Environment',
     image: '/images/environment.webp',
-    alt: 'Representative hands caring for a plant',
-    caption: 'Illustrative image representing environmental awareness.',
+    alt: 'Representative community outreach gathering',
+    caption: 'Illustrative community image representing shared environmental responsibility.',
     illustrative: true,
   },
   {

@@ -1,0 +1,23 @@
+---
+import { ChevronRight, House } from '@lucide/astro';
+
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/" aria-label="Home"><House size={15} aria-hidden="true" /></a></li>
+    <li aria-hidden="true"><ChevronRight size={14} /></li>
+    <li aria-current="page">{current}</li>
+  </ol>
+</nav>
+
+<style>
+  ol { display: flex; align-items: center; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+  li { color: inherit; font-size: .72rem; font-weight: 750; letter-spacing: .04em; }
+  a { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid currentColor; border-radius: 50%; opacity: .72; }
+</style>

@@ -1,0 +1,33 @@
+---
+import { ArrowRight } from '@lucide/astro';
+
+interface Action { label: string; href: string; style?: 'primary' | 'light' | 'secondary' }
+interface Props { eyebrow?: string; title: string; description: string; actions: Action[] }
+const { eyebrow = 'Take part', title, description, actions } = Astro.props;
+---
+<section class="cta-wrap section">
+  <div class="cta-motif" aria-hidden="true"><span></span></div>
+  <div class="container cta-inner reveal">
+    <span class="eyebrow">{eyebrow}</span>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <div class="cta-actions">
+      {actions.map((action) => (
+        <a class:list={['button', `button--${action.style ?? 'secondary'}`]} href={action.href}>
+          {action.label}<ArrowRight class="button-arrow" size={18} aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .cta-wrap { overflow: hidden; background: linear-gradient(125deg, var(--forest-dark), #295d47 72%, #3d735d); color: white; }
+  .cta-inner { position: relative; z-index: 2; display: grid; justify-items: center; gap: 1.2rem; text-align: center; }
+  :global(.cta-wrap .eyebrow) { color: #ffc28f; }
+  h2 { max-width: 850px; }
+  p { max-width: 680px; color: rgba(255,255,255,.76); font-size: 1.06rem; }
+  .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: .5rem; }
+  .cta-motif { position: absolute; left: 50%; top: 50%; width: min(80vw, 900px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.08); border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 0 5rem rgba(255,255,255,.018), 0 0 0 11rem rgba(255,255,255,.012); }
+  .cta-motif span { position: absolute; inset: 32%; border: 1px solid rgba(232,117,26,.28); border-radius: 50%; }
+  @media (max-width: 640px) { .cta-actions { display: grid; width: 100%; } }
+</style>

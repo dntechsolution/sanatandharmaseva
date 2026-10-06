@@ -1,0 +1,32 @@
+---
+import { ArrowRight, Baby, BookOpen, FlaskConical, GraduationCap, HeartHandshake, HeartPulse, Leaf, LibraryBig, Monitor, Scissors, TrafficCone, Users } from '@lucide/astro';
+
+interface Props { title: string; description: string; icon: string; href?: string; index?: number }
+const { title, description, icon, href, index } = Astro.props;
+const icons = { Baby, BookOpen, FlaskConical, GraduationCap, HeartHandshake, HeartPulse, Leaf, LibraryBig, Monitor, Scissors, TrafficCone, Users };
+const Icon = icons[icon as keyof typeof icons] ?? Users;
+---
+
+<article class="feature-card card reveal">
+  <div class="feature-top">
+    <span class="feature-icon"><Icon size={25} stroke-width={1.65} aria-hidden="true" /></span>
+    {index !== undefined && <span class="feature-index">{String(index + 1).padStart(2, '0')}</span>}
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  {href && <a class="feature-link" href={href} aria-label={`Learn more about ${title}`}>Learn more <ArrowRight size={17} aria-hidden="true" /></a>}
+</article>
+
+<style>
+  .feature-card { display: grid; min-height: 290px; grid-template-rows: auto auto 1fr auto; gap: 1rem; padding: 1.45rem; transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+  .feature-card:hover { transform: translateY(-7px); border-color: color-mix(in srgb, var(--saffron) 52%, var(--line)); box-shadow: var(--shadow-sm); }
+  .feature-top { display: flex; align-items: center; justify-content: space-between; }
+  .feature-icon { display: grid; width: 50px; height: 50px; place-items: center; border-radius: 16px; background: color-mix(in srgb, var(--forest) 11%, white); color: var(--forest); transition: transform 220ms ease; }
+  .feature-card:hover .feature-icon { transform: rotate(-4deg) translateY(-2px); }
+  .feature-index { color: var(--line); font-family: 'Lora', serif; font-size: 1.7rem; }
+  h3 { color: var(--maroon); }
+  p { color: var(--muted); font-size: .93rem; line-height: 1.7; }
+  .feature-link { display: inline-flex; width: fit-content; align-items: center; gap: .4rem; color: var(--forest); font-size: .78rem; font-weight: 800; }
+  .feature-link svg { transition: transform 180ms ease; }
+  .feature-link:hover svg { transform: translateX(4px); }
+</style>
