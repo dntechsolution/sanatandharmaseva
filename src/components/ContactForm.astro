@@ -41,15 +41,19 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   </div>
   <p class="field-error" id="agreement-error" data-error-for="agreement"></p>
   <div class="form-footer">
-    <button class="button button--primary" type="submit">Send Enquiry <ArrowRight size={18} aria-hidden="true" /></button>
+    <button class="button button--primary" type="submit" disabled aria-describedby="form-fallback">Send Enquiry <ArrowRight size={18} aria-hidden="true" /></button>
     <p class="form-status" role="status" aria-live="polite" data-form-status></p>
   </div>
+  <p class="form-fallback" id="form-fallback" data-form-fallback>Online enquiry controls are loading. You can also call, WhatsApp or email the organisation using the verified options on this page.</p>
+  <noscript><p class="form-fallback">Online enquiry requires JavaScript. Please call, WhatsApp or email the organisation using the verified options on this page.</p></noscript>
 </form>
 
 <script>
   import { submissionMode, validateContactForm, type ContactFormInput } from '../scripts/contact-form';
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   const status = form?.querySelector<HTMLElement>('[data-form-status]');
+  const fallback = form?.querySelector<HTMLElement>('[data-form-fallback]');
+  const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
 
   function clearErrors() {
     form?.querySelectorAll<HTMLElement>('[data-error-for]').forEach((node) => { node.textContent = ''; });
@@ -93,7 +97,6 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
       return;
     }
 
-    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     submit?.setAttribute('disabled', '');
     if (status) status.textContent = 'Sending your enquiry…';
     try {
@@ -107,6 +110,11 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
       submit?.removeAttribute('disabled');
     }
   });
+
+  if (form && submit) {
+    fallback?.setAttribute('hidden', '');
+    submit.removeAttribute('disabled');
+  }
 </script>
 
 <style>
@@ -124,6 +132,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   .agreement input { width: 18px; height: 18px; margin-top: .24rem; accent-color: var(--forest); }
   .form-footer { display: flex; align-items: center; gap: 1.2rem; }
   .form-status { color: var(--muted); font-size: .78rem; line-height: 1.5; }
+  .form-fallback { color: var(--muted); font-size: .74rem; line-height: 1.55; }
   button[disabled] { opacity: .55; cursor: wait; }
   @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .form-footer { align-items: stretch; flex-direction: column; } }
 </style>

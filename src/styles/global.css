@@ -11,8 +11,8 @@
   --color-charcoal: #242424;
   --color-muted: #66645f;
   --color-line: #e9e2d8;
-  --font-display: "Lora", Georgia, serif;
-  --font-sans: "Manrope", "Segoe UI", sans-serif;
+  --font-display: "Lora Variable", Georgia, serif;
+  --font-sans: "Manrope Variable", "Segoe UI", sans-serif;
 }
 
 :root {
@@ -35,6 +35,7 @@
   --radius-lg: 30px;
   --container: min(1180px, calc(100% - 2rem));
   --header-height: 80px;
+  --floating-contact-gutter: 0px;
 }
 
 * {
@@ -53,7 +54,7 @@ body {
   overflow-x: hidden;
   background: var(--cream);
   color: var(--ink);
-  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-family: "Manrope Variable", "Segoe UI", sans-serif;
   font-size: 1rem;
   line-height: 1.75;
   text-rendering: optimizeLegibility;
@@ -126,7 +127,7 @@ h2,
 h3 {
   margin: 0;
   color: inherit;
-  font-family: "Lora", Georgia, serif;
+  font-family: "Lora Variable", Georgia, serif;
   font-weight: 500;
   line-height: 1.1;
   text-wrap: balance;
@@ -198,12 +199,12 @@ p {
 
 .button--primary {
   background: var(--saffron);
-  color: var(--white);
+  color: var(--ink);
   box-shadow: 0 10px 26px rgba(232, 117, 26, 0.24);
 }
 
 .button--primary:hover {
-  background: var(--saffron-dark);
+  background: #f39448;
 }
 
 .button--secondary {
@@ -265,12 +266,17 @@ p {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: none;
   transition: opacity 650ms ease, transform 650ms ease;
 }
 
-.reveal.is-visible {
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal-ready .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
@@ -308,6 +314,11 @@ p {
   :root {
     --container: min(100% - 1.25rem, 1180px);
     --header-height: 70px;
+    --floating-contact-gutter: 3.25rem;
+  }
+
+  body {
+    padding-inline-end: var(--floating-contact-gutter);
   }
 
   .section {

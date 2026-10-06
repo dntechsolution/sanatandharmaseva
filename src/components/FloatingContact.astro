@@ -81,9 +81,13 @@ import { organisation } from '../data/organisation';
   }
 
   @media (max-width: 640px) {
+    .floating-contact {
+      right: max(0.35rem, env(safe-area-inset-right));
+    }
+
     .float-action {
-      width: 46px;
-      height: 46px;
+      width: 42px;
+      height: 42px;
     }
 
     .float-action span {
