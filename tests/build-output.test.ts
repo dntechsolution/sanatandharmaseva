@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -208,5 +208,91 @@ describe('gallery and contact experiences', () => {
     expect(html).toContain('I agree to be contacted regarding my enquiry.');
     expect(html).toContain('role="status" aria-live="polite"');
     expect(html).not.toMatch(/<form[^>]+action=/);
+  });
+});
+
+describe('production output matrix', () => {
+  const routeFiles = [
+    'index.html',
+    'about/index.html',
+    'programs/index.html',
+    'education-skills/index.html',
+    'community-development/index.html',
+    'our-reach/index.html',
+    'governance/index.html',
+    'gallery/index.html',
+    'get-involved/index.html',
+    'donate/index.html',
+    'contact/index.html',
+    'privacy-policy/index.html',
+    'terms/index.html',
+    'donation-policy/index.html',
+  ];
+
+  it('ships fourteen routes with unique titles, descriptions and canonicals', () => {
+    const metadata = routeFiles.map((file) => {
+      const html = readBuilt(file);
+      return {
+        title: html.match(/<title>(.*?)<\/title>/)?.[1],
+        description: html.match(/<meta name="description" content="([^"]+)"/)?.[1],
+        canonical: html.match(/<link rel="canonical" href="([^"]+)"/)?.[1],
+      };
+    });
+    for (const key of ['title', 'description', 'canonical'] as const) {
+      expect(metadata.every((item) => Boolean(item[key]))).toBe(true);
+      expect(new Set(metadata.map((item) => item[key])).size).toBe(routeFiles.length);
+    }
+  });
+
+  it('ships crawl assets and complete alternative text', () => {
+    expect(existsSync(dist('robots.txt'))).toBe(true);
+    expect(existsSync(dist('sitemap-index.xml'))).toBe(true);
+    for (const file of routeFiles) {
+      const html = readBuilt(file);
+      for (const tag of html.match(/<img\b[^>]*>/g) ?? []) {
+        if (tag.includes('data-lightbox-image')) continue;
+        expect(tag).toMatch(/alt="[^"]+"/);
+        if (!tag.includes('fetchpriority="high"')) expect(tag).toContain('loading="lazy"');
+      }
+    }
+  });
+
+  it('contains no empty or fabricated trust links and no payment credentials', () => {
+    const allHtml = routeFiles.map(readBuilt).join('\n');
+    expect(allHtml).not.toMatch(/href="(?:\s*|#)"/);
+    expect(allHtml).not.toMatch(/<a[^>]+data-certificate/);
+    expect(allHtml).not.toMatch(/account\s*(number|no\.)|a\/c\s*no|\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
+    expect(allHtml).not.toMatch(/facebook\.com|instagram\.com|x\.com|twitter\.com|youtube\.com/i);
+    expect(allHtml).not.toMatch(/<a[^>]+aria-disabled="true"/);
+  });
+
+  it('keeps testimonial placeholders anonymous and resolves internal route links', () => {
+    const home = readBuilt();
+    for (const name of ['Ravindra Patel', 'Ganesh Kumar Chaudhary', 'Vinod Sahani', 'Virendra Kumar']) {
+      expect(home).not.toContain(name);
+    }
+
+    for (const file of routeFiles) {
+      const html = readBuilt(file);
+      const hrefs = [...html.matchAll(/href="(\/[^"]*)"/g)].map((match) => match[1]);
+      for (const href of hrefs) {
+        const pathname = href.split(/[?#]/)[0];
+        if (pathname.startsWith('/_astro/') || pathname.startsWith('/images/') || pathname === '/favicon.svg') continue;
+        const target = pathname === '/' ? dist('index.html') : dist(pathname.slice(1), 'index.html');
+        expect(existsSync(target), `expected internal route ${pathname} from ${file}`).toBe(true);
+      }
+    }
+  });
+
+  it('preserves mobile-safe contact spacing and reduced-motion behavior in built CSS', () => {
+    const cssDirectory = dist('_astro');
+    const css = readdirSync(cssDirectory)
+      .filter((file) => file.endsWith('.css'))
+      .map((file) => readFileSync(resolve(cssDirectory, file), 'utf8'))
+      .join('\n');
+    expect(css).toContain('min-width:320px');
+    expect(css).toContain('overflow-x:hidden');
+    expect(css).toContain('safe-area-inset-bottom');
+    expect(css).toContain('prefers-reduced-motion:reduce');
   });
 });
