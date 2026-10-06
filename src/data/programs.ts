@@ -1,0 +1,160 @@
+import type { FocusArea, Program } from './types';
+
+export const focusAreas: FocusArea[] = [
+  {
+    title: 'Education',
+    description: 'Learning support and non-formal education that help make knowledge more accessible.',
+    icon: 'BookOpen',
+    href: '/education-skills#education',
+  },
+  {
+    title: 'Skill Development',
+    description: 'Practical, employment-oriented training designed to build confidence and capability.',
+    icon: 'Scissors',
+    href: '/education-skills#skills',
+  },
+  {
+    title: 'Women Empowerment',
+    description: 'Spaces for learning, skills, awareness and stronger participation in community life.',
+    icon: 'HeartHandshake',
+    href: '/community-development#women',
+  },
+  {
+    title: 'Health & Family Welfare',
+    description: 'Community awareness around everyday health, nutrition and family well-being.',
+    icon: 'HeartPulse',
+    href: '/community-development#health',
+  },
+  {
+    title: 'Environment',
+    description: 'Encouraging responsible habits and shared care for local surroundings.',
+    icon: 'Leaf',
+    href: '/community-development#environment',
+  },
+  {
+    title: 'Community Development',
+    description: 'Connecting local knowledge, volunteers and resources around practical needs.',
+    icon: 'Users',
+    href: '/community-development',
+  },
+];
+
+export const programs: Program[] = [
+  {
+    number: '01',
+    slug: 'vocational-training',
+    title: 'Vocational Training',
+    shortDescription: 'Practical learning that supports confidence, capability and livelihood pathways.',
+    description:
+      'Hands-on vocational learning creates space for people to practise useful skills in a supportive setting.',
+    objectives: ['Introduce practical skills', 'Encourage learning by doing', 'Support employment-oriented confidence'],
+    image: '/images/vocational-training.webp',
+    imageAlt: 'Representative view of hands practising a textile skill',
+    icon: 'Scissors',
+    href: '/education-skills#vocational-skills',
+  },
+  {
+    number: '02',
+    slug: 'computer-education',
+    title: 'Computer Education',
+    shortDescription: 'Foundational digital learning for an increasingly connected world.',
+    description:
+      'Computer learning initiatives focus on useful digital familiarity and confidence with everyday technology.',
+    objectives: ['Build digital familiarity', 'Support practical computer use', 'Encourage confident learning'],
+    image: '/images/computer-education.webp',
+    imageAlt: 'Representative view of learners using computers together',
+    icon: 'Monitor',
+    href: '/education-skills#digital-learning',
+  },
+  {
+    number: '03',
+    slug: 'non-formal-education',
+    title: 'Non-Formal Education',
+    shortDescription: 'Flexible learning support that meets learners where they are.',
+    description:
+      'Non-formal education complements conventional learning through approachable, community-oriented support.',
+    objectives: ['Encourage continued learning', 'Strengthen foundational understanding', 'Create welcoming learning spaces'],
+    image: '/images/non-formal-education.webp',
+    imageAlt: 'Representative community learning session with books and notebooks',
+    icon: 'GraduationCap',
+    href: '/education-skills#non-formal-education',
+  },
+  {
+    number: '04',
+    slug: 'mother-child-care',
+    title: 'Mother & Child Care',
+    shortDescription: 'Awareness and support for healthier families and informed care.',
+    description:
+      'Community conversations support practical understanding of nutrition, parenting and family well-being.',
+    objectives: ['Share accessible care information', 'Promote nutrition awareness', 'Support informed parenting'],
+    image: '/images/mother-child-care.webp',
+    imageAlt: 'Representative mother and child in a warm community setting',
+    icon: 'Baby',
+    href: '/community-development#mother-child',
+  },
+  {
+    number: '05',
+    slug: 'environmental-awareness',
+    title: 'Environmental Awareness',
+    shortDescription: 'Shared responsibility for cleaner, healthier local environments.',
+    description:
+      'Environmental awareness encourages communities to connect everyday choices with collective well-being.',
+    objectives: ['Encourage responsible habits', 'Build local awareness', 'Promote shared environmental care'],
+    image: '/images/environment.webp',
+    imageAlt: 'Representative hands caring for a young plant',
+    icon: 'Leaf',
+    href: '/community-development#environment',
+  },
+  {
+    number: '06',
+    slug: 'road-safety-awareness',
+    title: 'Road Safety Awareness',
+    shortDescription: 'Practical awareness for safer streets and responsible travel.',
+    description:
+      'Road-safety conversations help make everyday responsibilities visible to young people and families.',
+    objectives: ['Share essential road-safety practices', 'Encourage responsible behaviour', 'Support community awareness'],
+    image: '/images/road-safety.webp',
+    imageAlt: 'Representative road-safety learning activity',
+    icon: 'TrafficCone',
+    href: '/community-development#road-safety',
+  },
+  {
+    number: '07',
+    slug: 'science-technology',
+    title: 'Science & Technology Promotion',
+    shortDescription: 'Curiosity-led learning that connects ideas with everyday life.',
+    description:
+      'Science and technology promotion creates approachable opportunities to explore, ask questions and experiment.',
+    objectives: ['Encourage curiosity', 'Connect learning with daily life', 'Promote practical exploration'],
+    image: '/images/science-learning.webp',
+    imageAlt: 'Representative hands-on science learning activity',
+    icon: 'FlaskConical',
+    href: '/education-skills#learning-support',
+  },
+  {
+    number: '08',
+    slug: 'library-reading',
+    title: 'Library & Reading Promotion',
+    shortDescription: 'Welcoming access to books, ideas and independent learning.',
+    description:
+      'Reading promotion supports curiosity, language development and a lasting relationship with learning.',
+    objectives: ['Encourage reading habits', 'Improve access to learning resources', 'Create shared reading spaces'],
+    image: '/images/library-reading.webp',
+    imageAlt: 'Representative community reading space with books',
+    icon: 'LibraryBig',
+    href: '/education-skills#library-reading',
+  },
+  {
+    number: '09',
+    slug: 'women-empowerment',
+    title: 'Women Empowerment',
+    shortDescription: 'Skills, awareness and supportive networks for stronger participation.',
+    description:
+      'Women-focused initiatives bring learning, practical skills and community dialogue into an encouraging space.',
+    objectives: ['Build confidence through learning', 'Support practical skill development', 'Encourage community participation'],
+    image: '/images/women-empowerment.webp',
+    imageAlt: 'Representative group of Indian women learning together',
+    icon: 'HeartHandshake',
+    href: '/community-development#women',
+  },
+];

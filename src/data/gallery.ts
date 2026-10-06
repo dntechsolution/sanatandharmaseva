@@ -1,0 +1,78 @@
+import type { GalleryCategory, GalleryItem } from './types';
+
+export const galleryCategories: GalleryCategory[] = [
+  'All',
+  'Education',
+  'Skill Training',
+  'Community',
+  'Health',
+  'Environment',
+  'Women Empowerment',
+  'Events',
+];
+
+export const galleryItems: GalleryItem[] = [
+  {
+    id: 'learning-circle',
+    title: 'Learning Together',
+    category: 'Education',
+    image: '/images/non-formal-education.webp',
+    alt: 'Representative community learning scene',
+    caption: 'Illustrative image representing community learning initiatives.',
+    illustrative: true,
+  },
+  {
+    id: 'hands-on-skills',
+    title: 'Hands-on Skills',
+    category: 'Skill Training',
+    image: '/images/vocational-training.webp',
+    alt: 'Representative textile skill practice',
+    caption: 'Illustrative image representing practical skill development.',
+    illustrative: true,
+  },
+  {
+    id: 'community-dialogue',
+    title: 'Community Dialogue',
+    category: 'Community',
+    image: '/images/community-outreach.webp',
+    alt: 'Representative community conversation',
+    caption: 'Illustrative image representing community outreach and dialogue.',
+    illustrative: true,
+  },
+  {
+    id: 'family-wellbeing',
+    title: 'Family Well-being',
+    category: 'Health',
+    image: '/images/mother-child-care.webp',
+    alt: 'Representative mother and child wellbeing scene',
+    caption: 'Illustrative image representing family-health awareness.',
+    illustrative: true,
+  },
+  {
+    id: 'care-for-nature',
+    title: 'Care for Nature',
+    category: 'Environment',
+    image: '/images/environment.webp',
+    alt: 'Representative hands caring for a plant',
+    caption: 'Illustrative image representing environmental awareness.',
+    illustrative: true,
+  },
+  {
+    id: 'women-learning',
+    title: 'Women Learning Together',
+    category: 'Women Empowerment',
+    image: '/images/women-empowerment.webp',
+    alt: 'Representative group of women learning together',
+    caption: 'Illustrative image representing women-focused learning.',
+    illustrative: true,
+  },
+  {
+    id: 'community-gathering',
+    title: 'Shared Participation',
+    category: 'Events',
+    image: '/images/community-gathering.webp',
+    alt: 'Representative community gathering',
+    caption: 'Illustrative image representing community participation.',
+    illustrative: true,
+  },
+];
