@@ -1,5 +1,5 @@
 ---
-import { ArrowDown, ArrowRight } from '@lucide/astro';
+import { ArrowRight } from '@lucide/astro';
 
 interface Props {
   eyebrow: string;
@@ -20,7 +20,6 @@ const props = Astro.props;
 <section class="hero">
   <img class="hero-image" src={props.image} alt={props.imageAlt} width="1920" height="1080" fetchpriority="high" />
   <div class="hero-wash" aria-hidden="true"></div>
-  <div class="hero-rings" aria-hidden="true"><span></span></div>
   <div class="container hero-content">
     <span class="hero-eyebrow">{props.eyebrow}</span>
     <h1>{props.title}</h1>
@@ -31,30 +30,32 @@ const props = Astro.props;
     </div>
     {props.trustLine && <div class="trust-line">{props.trustLine}</div>}
   </div>
-  <a class="scroll-cue" href="#our-story" aria-label="Scroll to our story"><ArrowDown size={19} aria-hidden="true" /></a>
 </section>
 
 <style>
   .hero { position: relative; display: grid; min-height: min(880px, 96svh); align-items: end; overflow: hidden; background: var(--forest-dark); color: white; }
   .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% center; }
-  .hero-wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18, 37, 29, .96) 0%, rgba(18, 37, 29, .81) 38%, rgba(18, 37, 29, .28) 70%, rgba(18, 37, 29, .35) 100%), linear-gradient(0deg, rgba(18, 37, 29, .65), transparent 50%); }
-  .hero-rings { position: absolute; right: -8vw; bottom: -20vw; width: min(55vw, 760px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; box-shadow: 0 0 0 5vw rgba(255,255,255,.025), 0 0 0 10vw rgba(255,255,255,.018); }
-  .hero-rings span { position: absolute; inset: 31%; border: 1px solid rgba(232,117,26,.42); border-radius: 50%; }
+  .hero-wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 30, 54, .97) 0%, rgba(7, 30, 54, .85) 38%, rgba(7, 30, 54, .35) 70%, rgba(7, 30, 54, .45) 100%), linear-gradient(0deg, rgba(7, 30, 54, .65), transparent 50%); }
   .hero-content { position: relative; z-index: 2; display: grid; max-width: 1180px; gap: 1.35rem; padding-top: calc(var(--header-height) + 5rem); padding-bottom: clamp(5.5rem, 9vw, 8.5rem); }
-  .hero-eyebrow { width: fit-content; padding: .48rem .75rem; border: 1px solid rgba(255,255,255,.24); border-radius: 999px; background: rgba(255,255,255,.08); color: #ffe1c7; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; backdrop-filter: blur(8px); }
+  .hero-eyebrow { width: fit-content; padding: .48rem .75rem; border: 1px solid rgba(255,255,255,.24); border-radius: 999px; background: rgba(255,255,255,.1); color: #fde047; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; backdrop-filter: blur(8px); }
   h1 { max-width: 880px; }
-  p { max-width: 700px; color: rgba(255,255,255,.82); font-size: clamp(1.02rem, 1.7vw, 1.25rem); line-height: 1.75; }
+  p { max-width: 700px; color: rgba(255,255,255,.86); font-size: clamp(1.02rem, 1.7vw, 1.25rem); line-height: 1.75; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .6rem; }
-  .trust-line { margin-top: .5rem; color: rgba(255,255,255,.68); font-size: .7rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
-  .scroll-cue { position: absolute; z-index: 3; right: max(1.5rem, calc((100vw - 1180px) / 2)); bottom: 2.3rem; display: grid; width: 45px; height: 45px; place-items: center; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; animation: scroll-cue 2.4s ease-in-out infinite; }
-  @keyframes scroll-cue { 50% { transform: translateY(7px); } }
+  .trust-line { margin-top: .5rem; color: rgba(255,255,255,.75); font-size: .7rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
   @media (max-width: 640px) {
     .hero { min-height: 790px; }
     .hero-image { object-position: 65% center; }
-    .hero-wash { background: linear-gradient(0deg, rgba(18,37,29,.98) 0%, rgba(18,37,29,.78) 62%, rgba(18,37,29,.38) 100%); }
+    .hero-wash { background: linear-gradient(0deg, rgba(7,30,54,.98) 0%, rgba(7,30,54,.82) 62%, rgba(7,30,54,.4) 100%); }
     .hero-content { padding-bottom: 6rem; }
     .hero-actions { display: grid; }
     .trust-line { line-height: 1.7; }
-    .scroll-cue { right: 1.25rem; bottom: 1rem; }
+  }
+
+  @media (max-width: 430px) {
+    .hero { min-height: 740px; }
+    .hero-content { padding-top: calc(var(--header-height) + 3.5rem); padding-bottom: 5rem; gap: 1.1rem; }
+    h1 { max-width: 100%; font-size: clamp(2rem, 9vw, 2.5rem); }
+    p { font-size: clamp(.95rem, 3.4vw, 1.08rem); }
+    .hero-eyebrow { font-size: .6rem; padding: .36rem .6rem; }
   }
 </style>

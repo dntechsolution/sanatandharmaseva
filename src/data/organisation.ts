@@ -63,10 +63,12 @@ export const organisation = {
   compliance: [
     { title: 'Trust Registration', value: '534/2022–2023' },
     { title: 'Registration Date', value: '31 August 2022' },
-    { title: '12A Registration', value: 'Available' },
-    { title: '80G Registration', value: 'Available' },
-    { title: 'NGO Darpan', value: 'Registered' },
-    { title: 'CSR-1', value: 'Registered' },
+    { title: 'Organisation Level', value: 'All India' },
+    { title: 'PAN', value: 'ABFTS0853F' },
+    { title: '12A Registration', value: 'ABFTS0853FE20221' },
+    { title: '80G Registration', value: 'ABFTS0853FF20221' },
+    { title: 'NGO Darpan', value: 'DL/2022/0329789' },
+    { title: 'CSR-1', value: 'CSR00046309' },
   ] as ComplianceItem[],
   socialLinks: [] as Array<{ label: string; href: string }>,
 } as const;

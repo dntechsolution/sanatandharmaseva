@@ -7,7 +7,7 @@ import { galleryCategories, galleryItems } from '../data/gallery';
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 <MainLayout title="Gallery | Sanatan Dharam Sewa Kendra" description="Explore representative editorial imagery for education, skills, community, health, environment and women-empowerment initiatives." canonicalPath="/gallery">
-  <PageHero eyebrow="Gallery" title="A Visual Language for Community Action" description="Until verified organisation photographs are supplied, this gallery uses clearly labelled illustrative editorial imagery and never presents fictional people as actual participants." current="Gallery" tone="green" />
+  <PageHero eyebrow="Gallery" title="A Visual Language for Community Action" description="Illustrative images stay labelled until verified organisation photographs become available." descriptionSize="compact" current="Gallery" tone="green" />
   <section class="section gallery-section">
     <div class="container">
       <SectionHeading eyebrow="Illustrative gallery" title="Learning, Skills and Community" description="Use the filters to explore themes. Every image below is representative and can later be replaced with an approved organisation photograph." />
@@ -73,8 +73,10 @@ import MainLayout from '../layouts/MainLayout.astro';
 <style>
   .gallery-tools { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 2.5rem 0 2rem; }
   .gallery-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
-  .gallery-filters button { min-height: 42px; padding: .55rem .85rem; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--muted); font-size: .72rem; font-weight: 800; cursor: pointer; }
-  .gallery-filters button[aria-pressed='true'] { border-color: var(--forest); background: var(--forest); color: white; }
+  .gallery-filters button { min-height: 42px; padding: .55rem .85rem; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--muted); font-size: .72rem; font-weight: 800; cursor: pointer; transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .gallery-filters button:hover:not([aria-pressed='true']) { background: color-mix(in srgb, var(--forest) 8%, white); border-color: var(--forest); transform: translateY(-1px); }
+  .gallery-filters button:active { transform: scale(0.96); }
+  .gallery-filters button[aria-pressed='true'] { border-color: var(--forest); background: var(--forest); color: white; box-shadow: 0 4px 14px rgba(41, 93, 71, 0.2); }
   .gallery-tools > p { flex: 0 0 auto; color: var(--muted); font-size: .72rem; }
   .gallery-grid { columns: 3 290px; column-gap: 1rem; }
   .lightbox { width: min(92vw,1000px); max-height: 90vh; overflow: auto; padding: 0; border: 0; border-radius: var(--radius-md); background: var(--cream); color: var(--ink); box-shadow: var(--shadow-lg); }

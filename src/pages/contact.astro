@@ -20,12 +20,12 @@ const contacts = [
       <div class="contact-cards">
         {contacts.map(({ icon: Icon, ...contact }) => <a class="contact-card card reveal" href={contact.href} target={contact.title === 'WhatsApp Us' ? '_blank' : undefined} rel={contact.title === 'WhatsApp Us' ? 'noreferrer' : undefined} data-contact-card><Icon size={25} stroke-width={1.55} aria-hidden="true" /><span>{contact.title}</span><strong>{contact.value}</strong></a>)}
       </div>
-      <div class="contact-grid">
+      <div class="contact-grid" data-layout-safe="true" data-heading-wrap="local">
         <div class="form-copy reveal">
           <SectionHeading eyebrow="Send an enquiry" title="Tell Us How You’d Like to Connect" description="Choose the reason that best fits your enquiry. Required fields are clearly marked through validation when you continue." />
           <div class="address-card" id="address"><MapPin size={24} aria-hidden="true" /><div><h2>{organisation.legalName}</h2>{organisation.address.lines.map((line) => <p>{line}</p>)}</div></div>
         </div>
-        <ContactForm />
+        <div class="form-panel"><ContactForm /></div>
       </div>
     </div>
   </section>
@@ -37,7 +37,10 @@ const contacts = [
   .contact-card svg { margin-bottom: auto; color: var(--forest); }
   .contact-card span { color: var(--saffron-dark); font-size: .68rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
   .contact-card strong { overflow-wrap: anywhere; color: var(--maroon); font-family: 'Lora Variable',serif; font-size: 1.05rem; font-weight: 600; }
-  .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: clamp(2.5rem,7vw,7rem); margin-top: 5rem; }
+  .contact-grid { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); align-items: start; gap: clamp(2.5rem,5vw,5rem); margin-top: 5rem; }
+  .contact-grid > *, .form-panel { min-width: 0; }
+  .form-panel { width: 100%; }
+  .form-copy :global(.section-title), .form-copy :global(.section-subtitle) { max-width: 100%; white-space: normal; }
   .form-copy { display: grid; gap: 2rem; }
   .address-card { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.4rem; border-radius: var(--radius-sm); background: var(--cream-2); scroll-margin-top: 100px; }
   .address-card svg { color: var(--saffron); }

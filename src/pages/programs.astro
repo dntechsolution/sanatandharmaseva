@@ -10,7 +10,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 <MainLayout title="Our Programs | Sanatan Dharam Sewa Kendra" description="Explore education, vocational training, women empowerment, health, environment and community-awareness programs by Sanatan Dharam Sewa Kendra." canonicalPath="/programs">
   <PageHero eyebrow="Our programs" title="Programs Designed Around Community Needs" description="Nine connected areas of work bring learning, practical skills, family well-being and public awareness into one community-development framework." current="Our Programs" tone="green" />
   <section class="section programs-intro">
-    <div class="container intro-grid">
+    <div class="container intro-grid" data-layout-safe="true" data-heading-wrap="local">
       <SectionHeading eyebrow="A connected approach" title="Different Needs. One Shared Purpose." description="The programmes are organised as practical areas of attention. Their exact format can adapt to local context, available expertise and responsible community participation." />
       <blockquote>“Sustainable social development begins with education, opportunity, dignity, service and harmony.”</blockquote>
     </div>
@@ -23,7 +23,10 @@ import MainLayout from '../layouts/MainLayout.astro';
   <CTASection eyebrow="Start a conversation" title="Interested in Supporting a Program Area?" description="Connect with the organisation about volunteering, institutional collaboration or responsible support." actions={[{ label: 'Partner With Us', href: '/get-involved#partner', style: 'light' }, { label: 'Contact the Team', href: '/contact', style: 'secondary' }]} />
 </MainLayout>
 <style>
-  .intro-grid { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: clamp(3rem, 8vw, 8rem); }
+  .programs-intro { padding-block: clamp(4.5rem, 6vw, 7rem); }
+  .intro-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(300px,.9fr); align-items: center; gap: clamp(2.5rem,5vw,5rem); }
+  .intro-grid > * { min-width: 0; }
+  .intro-grid :global(.section-title), .intro-grid :global(.section-subtitle) { max-width: 100%; white-space: normal; }
   blockquote { margin: 0; padding: 1.5rem 0 1.5rem 2rem; border-left: 3px solid var(--saffron); color: var(--maroon); font-family: 'Lora Variable', serif; font-size: clamp(1.2rem, 2vw, 1.65rem); line-height: 1.45; }
   .program-list { display: grid; gap: clamp(5rem, 10vw, 9rem); }
   @media (max-width: 760px) { .intro-grid { grid-template-columns: 1fr; } }

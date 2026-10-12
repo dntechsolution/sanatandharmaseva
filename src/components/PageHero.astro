@@ -7,9 +7,10 @@ interface Props {
   description?: string;
   current: string;
   tone?: 'green' | 'maroon' | 'saffron';
+  descriptionSize?: 'default' | 'compact';
 }
 
-const { eyebrow, title, description, current, tone = 'green' } = Astro.props;
+const { eyebrow, title, description, current, tone = 'green', descriptionSize = 'default' } = Astro.props;
 ---
 
 <section class:list={['page-hero', `page-hero--${tone}`]}>
@@ -18,23 +19,46 @@ const { eyebrow, title, description, current, tone = 'green' } = Astro.props;
     <Breadcrumb current={current} />
     <span class="eyebrow">{eyebrow}</span>
     <h1 class="page-hero-title">{title}</h1>
-    {description && <p class="page-hero-subtitle">{description}</p>}
+    {description && <p class:list={['page-hero-subtitle', { 'page-hero-subtitle--compact': descriptionSize === 'compact' }]}>{description}</p>}
   </div>
 </section>
 
 <style>
-  .page-hero { position: relative; overflow: hidden; padding: calc(var(--header-height) + clamp(4.5rem, 8vw, 8rem)) 0 clamp(4.5rem, 8vw, 7rem); color: white; }
-  .page-hero--green { background: linear-gradient(130deg, #173e30, #295d47); }
-  .page-hero--maroon { background: linear-gradient(130deg, #4b1e1a, #7b2d26); }
-  .page-hero--saffron { background: linear-gradient(130deg, #9c420f, #e8751a); }
-  .page-hero-inner { position: relative; z-index: 2; display: grid; width: calc(100% - clamp(3rem, 8vw, 8rem)); gap: 1.25rem; }
-  .page-hero-title { max-width: none; font-size: clamp(2.35rem, 2.5vw, 2.5rem); }
-  .page-hero-subtitle { max-width: none; color: rgba(255,255,255,.8); font-size: clamp(.96rem, 1.2vw, 1.1rem); }
-  :global(.page-hero .eyebrow) { color: #ffd8b7; }
-  .page-hero-motif { position: absolute; right: -8rem; top: -10rem; width: min(55vw, 650px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(255,255,255,.025), 0 0 0 8rem rgba(255,255,255,.018); }
-  .page-hero-motif span { position: absolute; inset: 28%; border: 1px solid rgba(255,197,149,.35); border-radius: 50%; }
+  .page-hero { position: relative; overflow: hidden; padding: calc(var(--header-height) + clamp(3.5rem, 7vw, 7rem)) 0 clamp(3.5rem, 7vw, 6rem); color: white; }
+  .page-hero--green { background: linear-gradient(130deg, #071e36, #0d4a7a); }
+  .page-hero--maroon { background: linear-gradient(130deg, #0a2540, #1e3a8a); }
+  .page-hero--saffron { background: linear-gradient(130deg, #c2410c, #ff6b00); }
+  .page-hero-inner { position: relative; z-index: 2; display: grid; width: 100%; gap: 1.25rem; }
+  .page-hero-title { max-width: none; font-size: clamp(2rem, 3.5vw, 2.75rem); line-height: 1.15; animation: hero-fade-up 600ms ease both; }
+  .page-hero-subtitle { max-width: none; color: rgba(255,255,255,.88); font-size: clamp(.96rem, 1.2vw, 1.1rem); line-height: 1.7; animation: hero-fade-up 600ms 150ms ease both; }
+  .page-hero-subtitle--compact { font-size: clamp(.84rem, 1vw, .96rem); }
+  :global(.page-hero .eyebrow) { color: #fde047; }
+  .page-hero-motif { position: absolute; right: -8rem; top: -10rem; width: min(55vw, 650px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(255,255,255,.03), 0 0 0 8rem rgba(255,255,255,.018); animation: motif-drift 14s ease-in-out infinite alternate; pointer-events: none; }
+  .page-hero-motif span { position: absolute; inset: 28%; border: 1px solid rgba(255,183,3,.45); border-radius: 50%; }
+
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes motif-drift {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.05) rotate(4deg); }
+  }
+
+  @media (min-width: 1024px) {
+    .page-hero-inner { width: calc(100% - clamp(3rem, 8vw, 8rem)); }
+  }
+
   @media (min-width: 1280px) {
     .page-hero-title,
     .page-hero-subtitle { white-space: nowrap; }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero { padding: calc(var(--header-height) + 1.8rem) 0 2.6rem; }
+    .page-hero-inner { gap: 0.95rem; }
+    .page-hero-title { font-size: clamp(1.85rem, 6.8vw, 2.3rem); }
+    .page-hero-subtitle { font-size: 0.95rem; line-height: 1.6; }
   }
 </style>

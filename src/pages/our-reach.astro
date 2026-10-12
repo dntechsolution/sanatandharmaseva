@@ -12,7 +12,7 @@ const resourceIcons = [Building, Users, Wrench, School, LibraryBig, Speech, MapP
   <PageHero eyebrow="Our reach" title="Community Action Across North India" description="A developing network of places, community relationships and practical resource formats—presented without unsupported beneficiary totals." current="Our Reach" tone="green" />
 
   <section class="section reach-section">
-    <div class="container reach-grid">
+    <div class="container reach-grid" data-layout-safe="true" data-heading-wrap="local">
       <div class="map-card reveal">
         <svg viewBox="0 0 640 660" role="img" aria-labelledby="reach-map-title reach-map-desc">
           <title id="reach-map-title">Schematic representation of areas connected with the organisation</title>
@@ -50,7 +50,9 @@ const resourceIcons = [Building, Users, Wrench, School, LibraryBig, Speech, MapP
   <CTASection eyebrow="Connect locally" title="Interested in Community Collaboration?" description="Start a conversation about education, skills, awareness or community outreach in your area." actions={[{ label: 'Partner With Us', href: '/get-involved#partner', style: 'light' }, { label: 'Contact Us', href: '/contact', style: 'secondary' }]} />
 </MainLayout>
 <style>
-  .reach-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(3rem,8vw,8rem); }
+  .reach-grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: center; gap: clamp(2.5rem,6vw,6rem); }
+  .reach-grid > *, .reach-copy { min-width: 0; }
+  .reach-copy :global(.section-title), .reach-copy :global(.section-subtitle) { max-width: 100%; white-space: normal; }
   .map-card { padding: clamp(1rem,3vw,2rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: radial-gradient(circle at 70% 20%,#fff 0,var(--cream-2) 72%); box-shadow: var(--shadow-sm); }
   .map-card p { text-align: center; color: var(--muted); font-size: .7rem; }
   .reach-copy { display: grid; gap: 2rem; }

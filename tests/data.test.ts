@@ -21,7 +21,7 @@ describe('verified content model', () => {
     ]);
   });
 
-  it('exposes exactly the nine supplied program areas', () => {
+  it('exposes the supplied program areas', () => {
     expect(programs.map(({ title }) => title)).toEqual([
       'Vocational Training',
       'Computer Education',
@@ -32,6 +32,8 @@ describe('verified content model', () => {
       'Science & Technology Promotion',
       'Library & Reading Promotion',
       'Women Empowerment',
+      'Medical Camp',
+      'Water Resources',
     ]);
   });
 
@@ -50,7 +52,7 @@ describe('verified content model', () => {
       ['Vinod Sahani', 'Secretary'],
       ['Virendra Kumar', 'Treasurer'],
     ]);
-    expect(organisation.compliance).toHaveLength(6);
+    expect(organisation.compliance).toHaveLength(8);
     expect(organisation.compliance.every((item) => item.documentUrl === undefined)).toBe(true);
   });
 

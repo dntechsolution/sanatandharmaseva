@@ -113,7 +113,7 @@ describe('organisation and program page family', () => {
     expect(new Set(records.map(({ description }) => description)).size).toBe(routes.length);
   });
 
-  it('marks shared headings and subheadings for single-line desktop presentation', () => {
+  it('preserves shared heading presentation outside the requested sections', () => {
     const about = readBuilt('about/index.html');
     const home = readBuilt();
 
@@ -122,6 +122,18 @@ describe('organisation and program page family', () => {
     expect(about).toContain('data-content-width="balanced"');
     expect(home).toContain('class="section-title"');
     expect(home).toContain('class="section-subtitle"');
+    expect(about).toMatch(/\.page-hero-title[^}]*white-space:nowrap/);
+    expect(home).toMatch(/\.section-title[^}]*white-space:nowrap/);
+  });
+
+  it('keeps split-layout content inside its grid tracks', () => {
+    const routes = ['community-development', 'our-reach', 'contact', 'programs'];
+
+    for (const route of routes) {
+      const html = readBuilt(`${route}/index.html`);
+      expect(html, route).toContain('data-layout-safe="true"');
+      expect(html, route).toContain('data-heading-wrap="local"');
+    }
   });
 
   it('keeps the about story to verified values and milestones', () => {
@@ -131,6 +143,15 @@ describe('organisation and program page family', () => {
     }
     expect(html).toContain('>2020<');
     expect(html).toContain('>2022<');
+  });
+
+  it('presents the organisation journey as one labelled two-card timeline', () => {
+    const html = readBuilt('about/index.html');
+    const journey = html.match(/<section[^>]+class="[^"]*journey-section[^"]*"[\s\S]*?<\/section>/)?.[0] ?? '';
+
+    expect(journey).toContain('aria-labelledby="journey-title"');
+    expect(journey).toContain('id="journey-title"');
+    expect(journey.match(/<li[^>]+class="[^"]*timeline-card[^"]*"/g)).toHaveLength(2);
   });
 
   it('renders all nine numbered program sections from shared content', () => {
@@ -184,17 +205,19 @@ describe('transparency and participation pages', () => {
     for (const item of ['Board of Trustees', 'Executive Committee', 'Management Committee', 'Chief Executive', 'Community Organisers', 'Social Workers / Teachers / Instructors', 'Volunteers', 'Beneficiaries', 'Ravindra Patel', 'Ganesh Kumar Chaudhary', 'Vinod Sahani', 'Virendra Kumar', '534/2022–2023', '31 August 2022', '12A Registration', '80G Registration', 'NGO Darpan', 'CSR-1']) {
       expect(html).toContain(item);
     }
-    expect(html.match(/Document available on request\./g)).toHaveLength(6);
+    expect(html.match(/Document available on request\./g)).toHaveLength(8);
     expect(html).not.toMatch(/<a[^>]+data-certificate/);
   });
 
-  it('keeps donation information verified and excludes payment credentials', () => {
+  it('publishes the confirmed bank details with verification contacts', () => {
     const html = readBuilt('donate/index.html');
-    expect(html).toContain('For current donation and bank details, please contact Sanatan Dharam Sewa Kendra directly or use the verified payment information displayed by the organisation.');
+    expect(html).toContain('data-bank-details');
+    expect(html).toContain('State Bank of India');
+    expect(html).toContain('052350007841345698983');
+    expect(html).toContain('SBIN0018689');
     expect(html).toContain('href="tel:+919999859666"');
     expect(html).toContain('https://wa.me/919999859666');
     expect(html).toContain('href="/contact"');
-    expect(html).not.toMatch(/account\s*(number|no\.)|a\/c\s*no|\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
   });
 
   it('keeps policy pages informational and contactable', () => {
@@ -214,6 +237,8 @@ describe('gallery and contact experiences', () => {
     expect(html.match(/loading="lazy"/g)?.length).toBeGreaterThanOrEqual(7);
     expect(html.match(/data-illustrative="true"/g)).toHaveLength(7);
     expect(html).toMatch(/<dialog[^>]+aria-labelledby="lightbox-title"/);
+    expect(html).toContain('Illustrative images stay labelled until verified organisation photographs become available.');
+    expect(html).toContain('page-hero-subtitle--compact');
     expect(html).not.toMatch(/actual beneficiaries|our beneficiaries pictured|programme participants pictured/i);
   });
 
@@ -299,11 +324,12 @@ describe('production output matrix', () => {
     }
   });
 
-  it('contains no empty or fabricated trust links and no payment credentials', () => {
+  it('contains no empty or fabricated trust links and keeps payment credentials on the donation page only', () => {
     const allHtml = routeFiles.map(readBuilt).join('\n');
+    const nonDonationHtml = routeFiles.filter((file) => file !== 'donate/index.html').map(readBuilt).join('\n');
     expect(allHtml).not.toMatch(/href="(?:\s*|#)"/);
     expect(allHtml).not.toMatch(/<a[^>]+data-certificate/);
-    expect(allHtml).not.toMatch(/account\s*(number|no\.)|a\/c\s*no|\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
+    expect(nonDonationHtml).not.toMatch(/account\s*(number|no\.)|a\/c\s*no|\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
     expect(allHtml).not.toMatch(/facebook\.com|instagram\.com|x\.com|twitter\.com|youtube\.com/i);
     expect(allHtml).not.toMatch(/<a[^>]+aria-disabled="true"/);
   });

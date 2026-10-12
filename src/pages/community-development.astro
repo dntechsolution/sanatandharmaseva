@@ -48,7 +48,7 @@ const awarenessTopics = [
   </section>
 
   <section class="section awareness-section">
-    <div class="container awareness-grid">
+    <div class="container awareness-grid" data-layout-safe="true" data-heading-wrap="local">
       <div>
         <SectionHeading eyebrow="Awareness topics" title="Useful Knowledge for Everyday Decisions" description="Clear, approachable information can help families discuss health, safety, savings and shared responsibility with more confidence." />
         <Sparkles class="awareness-mark" size={68} stroke-width={1} aria-hidden="true" />
@@ -75,7 +75,9 @@ const awarenessTopics = [
   .theme-card svg { color: var(--forest); }
   .theme-card h2 { color: var(--maroon); font-size: 1.4rem; }
   .theme-card p { color: var(--muted); font-size: .9rem; }
-  .awareness-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(3rem,8vw,8rem); }
+  .awareness-grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: start; gap: clamp(2.5rem,6vw,6rem); }
+  .awareness-grid > *, .topic-grid { min-width: 0; }
+  .awareness-grid :global(.section-title), .awareness-grid :global(.section-subtitle) { max-width: 100%; white-space: normal; }
   .awareness-mark { margin-top: 2rem; color: var(--saffron); }
   .topic-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .8rem; }
   .topic-card { display: flex; min-height: 120px; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 16px; background: white; }

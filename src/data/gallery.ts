@@ -17,8 +17,8 @@ export const galleryItems: GalleryItem[] = [
     title: 'Learning Together',
     category: 'Education',
     image: '/images/non-formal-education.webp',
-    alt: 'Representative community learning scene',
-    caption: 'Illustrative image representing community learning initiatives.',
+    alt: 'Teacher and students in community learning session',
+    caption: 'Community learning session bringing foundational education to children.',
     illustrative: true,
   },
   {
@@ -26,8 +26,8 @@ export const galleryItems: GalleryItem[] = [
     title: 'Hands-on Skills',
     category: 'Skill Training',
     image: '/images/vocational-training.webp',
-    alt: 'Representative textile skill practice',
-    caption: 'Illustrative image representing practical skill development.',
+    alt: 'Vocational training students in learning session',
+    caption: 'Vocational training session focused on practical skill development.',
     illustrative: true,
   },
   {
