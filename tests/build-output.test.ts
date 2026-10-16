@@ -91,6 +91,54 @@ describe('home narrative', () => {
     expect(html).toContain('href="/get-involved#volunteer"');
     expect(html).toContain('href="/get-involved#partner"');
   });
+
+  it('presents all eight supplied health-camp photographs as verified event media', () => {
+    const html = readBuilt();
+    const section = html.match(/<section[^>]+class="[^"]*health-camp-section[^"]*"[\s\S]*?<\/section>/)?.[0] ?? '';
+
+    expect(section).toContain('aria-labelledby="health-camp-title"');
+    expect(section).toContain('id="health-camp-title"');
+    expect(section).toContain('Health Check-up Camp');
+    expect(section.match(/data-event-photo="true"/g)).toHaveLength(8);
+
+    for (let index = 1; index <= 8; index += 1) {
+      expect(section).toContain(`src="/images/health-camp/health-camp-${index}.jpg"`);
+      expect(existsSync(dist('images', 'health-camp', `health-camp-${index}.jpg`))).toBe(true);
+    }
+
+    expect(section).not.toContain('data-illustrative="true"');
+  });
+
+  it('allows the health-camp description to wrap beside its desktop gallery link', () => {
+    const css = readdirSync(dist('_astro'))
+      .filter((file) => file.endsWith('.css'))
+      .map((file) => readFileSync(resolve(dist('_astro'), file), 'utf8'))
+      .join('\n');
+
+    expect(css).toMatch(/\.health-camp-heading[^}]*?\.section-subtitle\{[^}]*white-space:normal/);
+  });
+
+  it('introduces the patron profile between the organisation story and philosophy', () => {
+    const html = readBuilt();
+    const profile = html.match(/<section[^>]+class="[^"]*patron-section[^"]*"[\s\S]*?<\/section>/)?.[0] ?? '';
+
+    expect(profile).toContain('aria-labelledby="patron-title"');
+    expect(profile).toContain('id="patron-title"');
+    expect(profile).toContain('Patron, Mentor &amp; Trustee');
+    expect(profile).toContain('Shri Arun Kumar Sinha');
+    expect(profile).toContain('Retired IAS Officer');
+    expect(profile).toContain('1983 Batch');
+    expect(profile).toContain('Uttar Pradesh Cadre');
+    expect(profile).toContain('Additional Chief Secretary, Government of Uttar Pradesh');
+    expect(profile).toContain('Uttar Pradesh Subordinate Services Selection Commission (UPSSSC)');
+    expect(profile).toContain('Independent Director, Hindustan Aeronautics Limited (HAL)');
+    expect(profile).not.toContain('Â');
+    expect(profile).toMatch(/<img[^>]+src="\/images\/arun-kumar-sinha\.jpg"[^>]+alt="Portrait of Shri Arun Kumar Sinha"[^>]+loading="lazy"/);
+    expect(existsSync(dist('images', 'arun-kumar-sinha.jpg'))).toBe(true);
+
+    expect(html.indexOf('story-section')).toBeLessThan(html.indexOf('patron-section'));
+    expect(html.indexOf('patron-section')).toBeLessThan(html.indexOf('philosophy-section'));
+  });
 });
 
 describe('organisation and program page family', () => {

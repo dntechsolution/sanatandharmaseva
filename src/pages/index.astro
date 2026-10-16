@@ -18,6 +18,49 @@ const impactPhilosophy = [
   { title: 'Community', description: 'Shared responsibility strengthens local action.' },
   { title: 'Environment', description: 'Sustainable habits protect everyday well-being.' },
 ];
+
+const healthCampPhotos = [
+  {
+    image: '/images/health-camp/health-camp-1.jpg',
+    alt: 'Seven organisers standing together at the health check-up camp venue',
+    caption: 'Organisers and community partners',
+  },
+  {
+    image: '/images/health-camp/health-camp-2.jpg',
+    alt: 'Health camp attendees seated inside the banquet hall',
+    caption: 'Community participation',
+  },
+  {
+    image: '/images/health-camp/health-camp-3.jpg',
+    alt: 'Medical professional performing a heart screening for a participant',
+    caption: 'Preventive health screening',
+  },
+  {
+    image: '/images/health-camp/health-camp-4.jpg',
+    alt: 'Organisers standing beside the Sanatan Dharam Sewa Kendra health camp banner',
+    caption: 'Health camp collaboration',
+  },
+  {
+    image: '/images/health-camp/health-camp-5.jpg',
+    alt: 'Health camp participants speaking with the registration coordinator',
+    caption: 'Guidance and registration',
+  },
+  {
+    image: '/images/health-camp/health-camp-6.jpg',
+    alt: 'Medical worker checking a participant’s blood pressure',
+    caption: 'Routine health checks',
+  },
+  {
+    image: '/images/health-camp/health-camp-7.jpg',
+    alt: 'Health camp medical team posing together beside the event banner',
+    caption: 'Medical team and organisers',
+  },
+  {
+    image: '/images/health-camp/health-camp-8.jpg',
+    alt: 'Organisers and medical team gathered around the health check-up camp banner',
+    caption: 'Working together for community health',
+  },
+];
 ---
 
 <MainLayout
@@ -55,6 +98,31 @@ const impactPhilosophy = [
     </div>
   </section>
 
+  <section class="section patron-section" aria-labelledby="patron-title">
+    <div class="container">
+      <article class="patron-panel reveal">
+        <div class="patron-portrait">
+          <span aria-hidden="true"></span>
+          <img src="/images/arun-kumar-sinha.jpg" alt="Portrait of Shri Arun Kumar Sinha" width="200" height="200" loading="lazy" />
+        </div>
+        <div class="patron-copy">
+          <span class="patron-kicker">Leadership &amp; Guidance</span>
+          <h2 id="patron-title">Patron, Mentor &amp; Trustee</h2>
+          <h3>Shri Arun Kumar Sinha</h3>
+          <p class="patron-service">Retired IAS Officer <span aria-hidden="true">·</span> 1983 Batch <span aria-hidden="true">·</span> Uttar Pradesh Cadre</p>
+          <div class="patron-appointments">
+            <span>Former Key Appointments</span>
+            <ul>
+              <li>Additional Chief Secretary, Government of Uttar Pradesh</li>
+              <li>Chairman and Member, Uttar Pradesh Subordinate Services Selection Commission (UPSSSC)</li>
+              <li>Independent Director, Hindustan Aeronautics Limited (HAL)</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="section philosophy-section" aria-labelledby="philosophy-title">
     <div class="philosophy-rings" aria-hidden="true"><span></span></div>
     <div class="container philosophy-inner reveal">
@@ -86,6 +154,28 @@ const impactPhilosophy = [
     <div class="container">
       <SectionHeading eyebrow="Impact philosophy" title="Change Is More Than a Number" description="We focus on the qualities that help communities move forward—learning, confidence, opportunity, participation and responsible action." light align="center" />
       <StatsStrip items={impactPhilosophy} />
+    </div>
+  </section>
+
+  <section class="section health-camp-section" aria-labelledby="health-camp-title">
+    <div class="container">
+      <div class="health-camp-heading">
+        <SectionHeading
+          eyebrow="Community health in action"
+          title="Health Check-up Camp"
+          titleId="health-camp-title"
+          description="A glimpse of our health camp, where organisers, medical professionals and community members came together around accessible preventive care."
+        />
+        <a class="text-link health-camp-link" href="/gallery">Explore the Gallery <ArrowRight size={18} aria-hidden="true" /></a>
+      </div>
+      <div class="health-camp-gallery" aria-label="Photographs from the health check-up camp">
+        {healthCampPhotos.map((photo, index) => (
+          <figure class:list={['health-camp-photo', { 'health-camp-photo--lead': index === 0, 'health-camp-photo--wide': index === 1 }]} data-event-photo="true">
+            <img src={photo.image} alt={photo.alt} width="888" height="667" loading="lazy" />
+            <figcaption>{photo.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -141,6 +231,24 @@ const impactPhilosophy = [
   .story-copy { display: grid; gap: 1.25rem; }
   .story-copy h2 { color: var(--maroon); }
   .story-copy p { color: var(--muted); }
+  .patron-section { padding-top: 0; background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%); }
+  .patron-panel { position: relative; display: grid; grid-template-columns: minmax(200px, .72fr) minmax(0, 1.65fr); align-items: center; gap: clamp(2rem, 6vw, 5.5rem); overflow: hidden; padding: clamp(2rem, 5vw, 4.5rem); border-radius: var(--radius-lg); background: linear-gradient(135deg, #071e36 0%, var(--maroon) 68%, #0d3859 100%); color: var(--white); box-shadow: var(--shadow-lg); }
+  .patron-panel::after { position: absolute; right: -8rem; bottom: -11rem; width: 24rem; aspect-ratio: 1; border: 1px solid rgba(255, 183, 3, .18); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(255, 183, 3, .025), 0 0 0 8rem rgba(255, 183, 3, .018); content: ''; pointer-events: none; }
+  .patron-portrait { position: relative; z-index: 1; width: min(100%, 250px); justify-self: center; padding: .7rem; border: 1px solid rgba(255, 255, 255, .2); border-radius: 28px; background: rgba(255, 255, 255, .08); box-shadow: 0 24px 55px rgba(0, 0, 0, .24); }
+  .patron-portrait::before { position: absolute; z-index: -1; inset: -1.1rem auto auto -1.1rem; width: 4.2rem; height: 4.2rem; border-top: 3px solid var(--saffron); border-left: 3px solid var(--saffron); border-radius: 16px 0 0; content: ''; }
+  .patron-portrait > span { position: absolute; z-index: 1; right: -.55rem; bottom: 1.3rem; width: .7rem; height: 4.5rem; border-radius: 999px; background: var(--gold); box-shadow: 0 0 0 6px rgba(255, 183, 3, .12); }
+  .patron-portrait img { width: 100%; aspect-ratio: 1; border-radius: 20px; object-fit: cover; }
+  .patron-copy { position: relative; z-index: 1; display: grid; min-width: 0; gap: .85rem; }
+  .patron-kicker { color: #fde047; font-size: .7rem; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
+  .patron-copy h2 { max-width: 760px; color: var(--white); font-size: clamp(2rem, 4vw, 3.35rem); }
+  .patron-copy h3 { margin-top: .45rem; color: #ffd0aa; font-family: 'Manrope Variable', sans-serif; font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 800; }
+  .patron-service { color: rgba(255, 255, 255, .76); font-size: .9rem; font-weight: 650; }
+  .patron-service span { margin-inline: .35rem; color: var(--saffron); }
+  .patron-appointments { display: grid; gap: .85rem; margin-top: 1.1rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, .16); }
+  .patron-appointments > span { color: rgba(255, 255, 255, .6); font-size: .66rem; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+  .patron-appointments ul { display: grid; gap: .65rem; margin: 0; padding: 0; list-style: none; }
+  .patron-appointments li { display: grid; grid-template-columns: .5rem 1fr; gap: .7rem; color: rgba(255, 255, 255, .88); font-size: .86rem; line-height: 1.55; }
+  .patron-appointments li::before { width: .4rem; height: .4rem; margin-top: .55rem; border-radius: 50%; background: var(--saffron); content: ''; }
   .philosophy-section {
     display: grid;
     min-height: 640px;
@@ -215,6 +323,20 @@ const impactPhilosophy = [
   .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
   .program-list { display: grid; gap: clamp(5rem, 10vw, 10rem); margin-top: clamp(4rem, 8vw, 7rem); }
   .impact-section :global(.section-heading) { margin-bottom: 3rem; }
+  .health-camp-section { overflow: hidden; background: var(--white); }
+  .health-camp-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 2rem; }
+  .health-camp-heading :global(.section-heading) { min-width: 0; max-width: 900px; }
+  .health-camp-heading :global(.section-subtitle) { white-space: normal; }
+  .health-camp-link { margin-bottom: .3rem; white-space: nowrap; }
+  .health-camp-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(130px, 15vw, 190px); gap: .75rem; margin-top: 3rem; }
+  .health-camp-photo { position: relative; overflow: hidden; min-width: 0; margin: 0; border-radius: var(--radius-sm); background: var(--cream-2); box-shadow: var(--shadow-sm); }
+  .health-camp-photo--lead { grid-column: span 2; grid-row: span 2; border-radius: var(--radius-md); }
+  .health-camp-photo--wide { grid-column: span 2; }
+  .health-camp-photo::after { position: absolute; inset: 38% 0 0; background: linear-gradient(transparent, rgba(7, 30, 54, .72)); content: ''; pointer-events: none; }
+  .health-camp-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 650ms cubic-bezier(.16, 1, .3, 1); }
+  .health-camp-photo:hover img { transform: scale(1.035); }
+  .health-camp-photo figcaption { position: absolute; z-index: 1; right: .9rem; bottom: .75rem; left: .9rem; color: white; font-size: .68rem; font-weight: 750; letter-spacing: .04em; line-height: 1.35; text-shadow: 0 1px 10px rgba(0, 0, 0, .28); }
+  .health-camp-photo--lead figcaption { right: 1.25rem; bottom: 1.1rem; left: 1.25rem; font-size: .82rem; }
   .activity-grid, .voices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
   .activity-card { display: grid; gap: .8rem; transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1); }
   .activity-card:hover { transform: translateY(-4px); }
@@ -223,18 +345,35 @@ const impactPhilosophy = [
   .activity-card h3 { color: var(--maroon); transition: color 200ms ease; }
   .activity-card:hover h3 { color: var(--saffron-dark); }
   .activity-card p { color: var(--muted); font-size: .9rem; }
-  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } .story-collage { min-height: 560px; } .focus-grid, .activity-grid { grid-template-columns: repeat(2, 1fr); } .voices-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .story-collage { min-height: 560px; }
+    .patron-panel { grid-template-columns: minmax(170px, .62fr) minmax(0, 1.38fr); gap: 2rem; }
+    .focus-grid, .activity-grid { grid-template-columns: repeat(2, 1fr); }
+    .health-camp-heading { grid-template-columns: 1fr; gap: 1rem; }
+    .health-camp-link { justify-self: start; }
+    .health-camp-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(150px, 30vw, 230px); }
+    .voices-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 580px) {
     .story-collage { min-height: 430px; }
     .story-main { right: 10%; }
     .story-small { width: 52%; }
     .story-seal { right: 1%; width: 84px; font-size: 1.1rem; }
+    .patron-panel { grid-template-columns: 1fr; padding: 2rem 1.35rem; border-radius: var(--radius-md); text-align: center; }
+    .patron-portrait { width: 180px; }
+    .patron-copy { justify-items: center; }
+    .patron-service { line-height: 1.7; }
+    .patron-appointments { width: 100%; text-align: left; }
     .philosophy-section { min-height: 540px; }
     .philosophy-rings { width: 92vw; }
     .philosophy-rings::before { inset: -2.5rem; border-width: 2.5rem; }
     .philosophy-rings::after { inset: -5.5rem; border-width: 3rem; }
     .philosophy-inner h2 { font-size: clamp(2.1rem, 10vw, 2.8rem); }
     .philosophy-inner p { font-size: 1rem; }
+    .health-camp-gallery { grid-template-columns: 1fr; grid-auto-rows: auto; gap: .65rem; margin-top: 2rem; }
+    .health-camp-photo, .health-camp-photo--lead, .health-camp-photo--wide { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 3; }
+    .health-camp-photo figcaption, .health-camp-photo--lead figcaption { right: 1rem; bottom: .85rem; left: 1rem; font-size: .72rem; }
     .focus-grid, .activity-grid { grid-template-columns: 1fr; }
   }
 </style>
